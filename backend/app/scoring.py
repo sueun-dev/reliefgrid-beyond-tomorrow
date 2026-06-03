@@ -92,6 +92,13 @@ def _zone_to_dict(zone: Any) -> Dict[str, Any]:
         "comms": zone.comms,
         "x": zone.x,
         "y": zone.y,
+        # Carry real-world provenance through ranking so the API stays consistent
+        # with the RankedZone schema (population, coords, data source).
+        "latitude": getattr(zone, "latitude", None),
+        "longitude": getattr(zone, "longitude", None),
+        "population": getattr(zone, "population", None),
+        "severity_basis": getattr(zone, "severity_basis", None),
+        "data_source": getattr(zone, "data_source", None),
     }
 
 
