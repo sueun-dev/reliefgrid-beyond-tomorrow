@@ -1,80 +1,76 @@
 # ReliefGrid Submit Runbook
 
-Do not click final Devpost submit from Codex. The user submits.
+You (the user) click final Devpost submit — not an automated tool.
 
-## 1. Start Local Preview
+## 1. Run the full stack
 
 ```bash
-python3 -m http.server 8031
+./run.sh
 ```
 
 Open:
 
-```text
-http://127.0.0.1:8031/devpost-handoff.html
-```
+- App: <http://127.0.0.1:8031/>
+- API docs (great to show judges): <http://127.0.0.1:8031/docs>
 
-## 2. Run Final QA
+## 2. Run the quality gate
 
 ```bash
-node final-qa.mjs
+./.venv/bin/python qa.py
 ```
 
 Expected ending:
 
 ```text
-ReliefGrid final QA passed
+Result: 27 passed, 0 failed
 ```
 
-## 3. Use Public Links
+## 3. Capture fresh media (new UI)
 
-Required by the hackathon:
+The screenshots/video must show the new full-stack UI. With the app running:
 
-- GitHub repository link: https://github.com/sueun-dev/reliefgrid-beyond-tomorrow
-- Demo video link: https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/demo-video.html
-- Live demo link: https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/
-- Pitch deck file.
-- Screenshots or product images.
+1. Screenshot the main dashboard (incident + mission + map + queue).
+2. Screenshot the response map and a committed dispatch in history.
+3. Record a 60–75s screen capture following `demo-script.md`.
 
-Use `reliefgrid-demo-video.webm` only if Devpost rejects the GitHub Pages video page.
+(The legacy static-prototype screenshots in `legacy/` should NOT be reused.)
 
-## 4. Check External Links
+## 4. Publish the code
 
 ```bash
-node external-link-check.mjs <github-or-video-or-live-demo-url>
+git add -A
+git commit -m "ReliefGrid: full-stack rebuild (FastAPI + SQLite + new SPA)"
+git push origin main   # remote: sueun-dev/reliefgrid-beyond-tomorrow
 ```
 
-Also open each link in a private/incognito browser. Do not use a `127.0.0.1` URL as a required external deliverable.
+## 5. Decide the live-demo link
 
-## 5. Paste Devpost Fields
+This is now a server app, so pick one:
 
-Use:
+- **Local demo (simplest):** run `./run.sh` during judging; show `/` and `/docs`.
+- **Hosted (optional):** deploy the FastAPI service (e.g. Render / Railway / Fly).
+  Start command: `python -m uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT`.
+  Install: `pip install -r requirements.txt`. SQLite works on a persistent disk;
+  for ephemeral hosts the DB simply re-seeds on boot.
 
-- `DEVPOST_FIELDS.md`
-- `devpost-handoff.html`
+## 6. Paste Devpost fields
 
-## 6. Upload Media
+Use `DEVPOST_FIELDS.md` (Built With now lists the full stack).
 
-Recommended order:
+## 7. Attach media + links
 
-1. `reliefgrid-main.png`
-2. `reliefgrid-brief.png`
-3. `reliefgrid-mobile.png`
-
-Attach:
-
-- `reliefgrid-pitch-deck.pptx`
-- External demo video URL
+- Pitch deck: `reliefgrid-pitch-deck.pptx`
+- Demo video: your fresh recording (or `reliefgrid-demo-video.webm`)
 - GitHub repository URL
+- Fresh screenshots from step 3
 
-## 7. Preview, Then User Submits
+## 8. Preview, then submit
 
 Check:
 
-- The project name is `ReliefGrid`.
+- Project name is `ReliefGrid`.
 - The first paragraph says exactly what the product does.
-- The demo video link opens without login.
-- The GitHub repository link opens without login.
-- The pitch deck is attached.
-- The screenshots are visible.
-- User clicks final submit.
+- "Built With" reflects the full stack (FastAPI, SQLAlchemy/SQLite, …).
+- The demo video and GitHub links open without login.
+- The pitch deck and screenshots are visible.
+- You click final submit.

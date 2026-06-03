@@ -1,0 +1,14 @@
+# One-click deploy config for Render (https://render.com).
+# In the Render dashboard: New → Blueprint → point at this repo. Render reads
+# this file, builds the Dockerfile, and gives you a public https URL.
+services:
+  - type: web
+    name: reliefgrid
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 8031

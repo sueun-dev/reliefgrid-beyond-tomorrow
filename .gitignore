@@ -4,3 +4,14 @@ outputs/
 *.zip
 *.log
 
+# Python / FastAPI backend
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local database (regenerated from seed on first run)
+*.db
+*.db-journal
+reliefgrid.db
+backend/reliefgrid.db

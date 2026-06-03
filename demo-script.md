@@ -1,34 +1,56 @@
 # ReliefGrid Demo Script
 
-## 60-75 Second Cut
+Record from the running full-stack app (`./run.sh` → <http://127.0.0.1:8031/>).
+Tip: open in a fresh browser profile so the welcome overlay appears on cue.
 
-### 0:00-0:10
+## 60–75 Second Cut
 
-"ReliefGrid is for local emergency teams that have scarce supplies and several urgent zones at once."
+### 0:00–0:10 — Hook + what it is
+"ReliefGrid is for local emergency teams with scarce supplies and several urgent
+areas at once — it decides who to help first."
 
-Show the main dashboard.
+Open the app. The welcome overlay shows the 3 steps (Add real locations → Review the
+priority → Commit & share). Click **Got it**.
 
-### 0:10-0:25
+### 0:10–0:25 — Real data, not dummy data  ← the differentiator
+"Every response zone is a real place. Population, severity, and distance are pulled
+live from Open-Meteo — nothing is fabricated."
 
-"The team enters the incident, time window, transport mode, available supplies, and the signals coming from each response zone."
+Point at a zone card: **Population — LIVE**, **Distance — COMPUTED**, **Severity —
+DERIVED**, and the source line (`Open-Meteo · Mesa, Arizona · apparent temp 40.8 °C ·
+observed …`). Point at the legend: live / derived / you report.
 
-Show resources and zone inputs.
+### 0:25–0:38 — Add a real location, live
+"Add anywhere on Earth." Click **Add location**, type a real city, pick a candidate.
 
-### 0:25-0:45
+It geocodes, pulls live weather, computes the real distance from the relief hub, and
+drops it into the ranking — in real time.
 
-"ReliefGrid ranks zones using severity, vulnerable residents, population exposure, comms reliability, resource fit, and travel friction."
+### 0:38–0:52 — Transparent scoring
+"You report the two signals with no public feed — % vulnerable residents and %
+working comms. Everything else is real. ReliefGrid ranks the zones server-side on a
+fully inspectable rule and recomputes on every change."
 
-Show the priority map and score rail.
+Drag a Vulnerable/Comms slider; the priority queue, response map, and the three
+metrics (impact / coverage / residual risk) update instantly.
 
-### 0:45-1:05
+### 0:52–1:05 — The dispatch brief + real backend
+"The output is a dispatch brief: the top zone, why it wins, a first-hour action plan,
+and a fallback. It's a real full stack — commit it and it's saved to the database
+with a timestamped history."
 
-"The output is a dispatch brief: top zone, why it wins, first-hour actions, and a fallback if supplies or communications fail."
+Show the top-mission card and action plan → click **Commit dispatch** (it appears in
+history) → flash **/docs** (the live Swagger API).
 
-Show the dispatch brief and action plan.
+### 1:05–1:15 — Close
+"Export the brief as a PNG to hand off. Real data, transparent scoring, one clear
+first move — prioritize response before the crisis spreads."
 
-### 1:05-1:15
+Click **Export PNG**; end on the receipt.
 
-"It works locally, saves the plan in the browser, copies a brief, and exports a PNG handoff. The goal is simple: prioritize response before the crisis spreads."
+---
 
-Show export or final screenshot.
-
+## One-liner for Devpost
+> ReliefGrid turns **real, live data** (Open-Meteo geocoding + weather) into a clear
+> emergency dispatch brief — a genuine FastAPI + SQLite full stack with transparent,
+> inspectable scoring and honest data provenance on every field.

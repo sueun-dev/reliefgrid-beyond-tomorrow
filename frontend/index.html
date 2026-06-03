@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReliefGrid — Prioritize response before the crisis spreads</title>
+  <meta name="description" content="ReliefGrid turns scarce-resource emergencies into a clear dispatch brief: where to send help first, why, and what to do in the first hour. Full-stack, transparent priority scoring." />
+  <meta name="theme-color" content="#0a0f1a" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0f1a'/%3E%3Cpath d='M16 5l9 5v8c0 5-4 8-9 9-5-1-9-4-9-9V10z' fill='none' stroke='%23f5b53f' stroke-width='2'/%3E%3Ccircle cx='16' cy='15' r='3' fill='%2334d399'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <!-- ── Top bar ───────────────────────────────────────────────── -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="34" height="34">
+          <path d="M16 4l10 5.5v8.5c0 5.4-4.3 8.8-10 10C10.3 26.8 6 23.4 6 18V9.5z" fill="none" stroke="url(#g)" stroke-width="2"/>
+          <circle cx="16" cy="15.5" r="3.4" fill="#34d399"/>
+          <path d="M16 9v2.6M16 19.4V22M10.5 15.5h2.4M19.1 15.5h2.4" stroke="#f5b53f" stroke-width="1.6" stroke-linecap="round"/>
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f5b53f"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs>
+        </svg>
+      </span>
+      <div class="brand-text">
+        <span class="brand-name">ReliefGrid</span>
+        <span class="brand-tag">Prioritize response before the crisis spreads</span>
+      </div>
+    </div>
+
+    <span class="status-pill" id="statusPill" title="Backend status">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">connecting…</span>
+    </span>
+
+    <div class="topbar-actions">
+      <button class="ghost-btn" id="howItWorks" type="button" title="What ReliefGrid is and how to use it">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        How it works
+      </button>
+      <a class="ghost-btn" href="/docs" target="_blank" rel="noopener" title="Interactive API documentation">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        API docs
+      </a>
+    </div>
+  </header>
+
+  <!-- ── Guided steps ──────────────────────────────────────────── -->
+  <nav class="steprail" id="steprail" aria-label="How to use ReliefGrid">
+    <a class="step" href="#step-setup" data-step="step-setup">
+      <span class="step-num">1</span>
+      <span class="step-text"><strong>Set up the situation</strong><em>Describe the emergency &amp; each area</em></span>
+    </a>
+    <span class="step-sep" aria-hidden="true"></span>
+    <a class="step" href="#step-review" data-step="step-review">
+      <span class="step-num">2</span>
+      <span class="step-text"><strong>Review the priority</strong><em>See who needs help first, and why</em></span>
+    </a>
+    <span class="step-sep" aria-hidden="true"></span>
+    <a class="step" href="#step-commit" data-step="step-commit">
+      <span class="step-num">3</span>
+      <span class="step-text"><strong>Commit &amp; share</strong><em>Save the dispatch &amp; export the brief</em></span>
+    </a>
+  </nav>
+
+  <main class="layout">
+    <!-- ── Control column · STEP 1 ─────────────────────────────── -->
+    <section class="control-col" id="step-setup">
+      <div class="step-flag"><span>Step 1</span> Set up the situation</div>
+      <div class="panel" id="incidentPanel">
+        <div class="panel-head">
+          <h2>Active incident</h2>
+          <div class="incident-switch">
+            <select id="incidentSelect" class="select" aria-label="Select incident"></select>
+            <button class="icon-btn danger" id="deleteIncident" title="Delete this incident" aria-label="Delete incident">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+            </button>
+          </div>
+        </div>
+        <p class="panel-sub">The emergency you're planning for. Pick a saved one, or load a ready-made scenario below.</p>
+
+        <label class="field">
+          <span class="field-label">Incident name</span>
+          <input type="text" id="incidentName" class="input" maxlength="160" />
+        </label>
+
+        <div class="field">
+          <span class="field-label">Operating window <span class="help" tabindex="0" role="note" aria-label="Help: operating window" data-tip="How many hours you have to act. A shorter window raises urgency in the priority score.">i</span></span>
+          <div class="segmented" id="timeWindow" role="group" aria-label="Operating window">
+            <button data-value="6">6h</button>
+            <button data-value="12">12h</button>
+            <button data-value="24">24h</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field-label">Transport mode <span class="help" tabindex="0" role="note" aria-label="Help: transport mode" data-tip="How teams travel. Slower modes add more travel-time penalty to far-away zones.">i</span></span>
+          <div class="segmented" id="transportMode" role="group" aria-label="Transport mode">
+            <button data-value="bike">Bike</button>
+            <button data-value="van">Van</button>
+            <button data-value="mixed">Mixed</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field-label">Resource pool <span class="op-chip">you set</span> <span class="help" tabindex="0" role="note" aria-label="Help: resource pool" data-tip="What your team has on hand. There is no public feed for on-hand supplies, so you enter these — they are not live data.">i</span></span>
+          <div class="resource-grid" id="resourceGrid"></div>
+          <p class="field-note">Operational capacity you enter — no public feed exists for on-hand supplies.</p>
+        </div>
+
+        <div class="template-row">
+          <span class="field-label">Load scenario</span>
+          <div class="template-btns" id="templateBtns"></div>
+        </div>
+      </div>
+
+      <div class="panel" id="zonePanel">
+        <div class="panel-head">
+          <h2>Response zones <span class="help" tabindex="0" role="note" aria-label="Help: response zones" data-tip="Each area is a real place. Population, heat/flood severity, and distance are pulled live from Open-Meteo. You report the two field signals — % vulnerable residents and % working comms.">i</span></h2>
+          <button class="pill-btn" id="addZone">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            Add location
+          </button>
+        </div>
+        <p class="panel-sub">Real places only. Search a location → live population, weather-based severity, and distance are fetched automatically. You set the field-reported signals.</p>
+
+        <div class="data-legend" aria-label="Data sources">
+          <span><i class="dot live"></i> Live — Open-Meteo</span>
+          <span><i class="dot derived"></i> Derived from weather</span>
+          <span><i class="dot operator"></i> You report</span>
+        </div>
+
+        <div class="locsearch" id="locSearch" hidden>
+          <div class="locsearch-row">
+            <input id="placeInput" class="input" placeholder="Search a real place — e.g. Mesa, Tokyo, Galveston" maxlength="120" autocomplete="off" />
+            <select id="placeNeed" class="select" aria-label="Need for this location">
+              <option value="Water">Water</option>
+              <option value="Medical">Medical</option>
+              <option value="Cooling">Cooling</option>
+              <option value="Power">Power</option>
+            </select>
+            <button class="pill-btn" id="placeSearchBtn" type="button">Search</button>
+          </div>
+          <ul class="loc-results" id="locResults"></ul>
+        </div>
+
+        <div class="zone-list" id="zoneList"></div>
+      </div>
+    </section>
+
+    <!-- ── Results column · STEP 2 ─────────────────────────────── -->
+    <section class="results-col" id="step-review">
+      <div class="step-flag"><span>Step 2</span> Review the priority</div>
+      <article class="mission-card" id="missionCard">
+        <div class="mission-meta">
+          <span class="mission-eyebrow">Recommended first move</span>
+          <span class="rank-badge gold">#1</span>
+          <span class="live-badge" id="liveBadge" title="Results recalculate automatically on the server"><i></i><em id="liveText">Live</em></span>
+        </div>
+        <h1 class="mission-title" id="missionTitle">—</h1>
+        <p class="mission-detail" id="missionDetail">—</p>
+        <div class="mission-score">
+          <span class="score-value" id="missionScore">0</span>
+          <span class="score-label">priority<br/>score</span>
+        </div>
+      </article>
+
+      <div class="metrics-row">
+        <div class="metric" data-tone="amber">
+          <div class="gauge"><svg viewBox="0 0 80 80"><circle class="g-track" cx="40" cy="40" r="34"/><circle class="g-fill" id="gaugeImpact" cx="40" cy="40" r="34"/></svg><span class="gauge-num" id="impactScore">0</span></div>
+          <span class="metric-label">Impact <span class="help" tabindex="0" role="note" aria-label="Help: impact" data-tip="Priority score of the #1 zone — how urgent the top mission is. Higher means more urgent.">i</span></span>
+          <span class="metric-sub">top-zone priority</span>
+        </div>
+        <div class="metric" data-tone="green">
+          <div class="gauge"><svg viewBox="0 0 80 80"><circle class="g-track" cx="40" cy="40" r="34"/><circle class="g-fill" id="gaugeCoverage" cx="40" cy="40" r="34"/></svg><span class="gauge-num" id="coverageScore">0</span></div>
+          <span class="metric-label">Coverage <span class="help" tabindex="0" role="note" aria-label="Help: coverage" data-tip="Average resource fit across all zones — how well your supplies cover the needs. Higher is better.">i</span></span>
+          <span class="metric-sub">avg resource fit</span>
+        </div>
+        <div class="metric" data-tone="red">
+          <div class="gauge"><svg viewBox="0 0 80 80"><circle class="g-track" cx="40" cy="40" r="34"/><circle class="g-fill" id="gaugeRisk" cx="40" cy="40" r="34"/></svg><span class="gauge-num" id="riskScore">0</span></div>
+          <span class="metric-label">Residual risk <span class="help" tabindex="0" role="note" aria-label="Help: residual risk" data-tip="Estimated risk left after this dispatch, given coverage and field teams. Lower is better.">i</span></span>
+          <span class="metric-sub">after dispatch</span>
+        </div>
+      </div>
+
+      <div class="panel map-panel">
+        <div class="panel-head">
+          <h2>Response map</h2>
+          <span class="legend">
+            <i class="lg gold"></i> priority route
+            <i class="lg blue"></i> standby
+            <i class="lg hub"></i> relief hub
+          </span>
+        </div>
+        <canvas id="mapCanvas" width="900" height="500" aria-label="Response map showing ranked routes from the relief hub"></canvas>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Priority queue</h2><span class="muted" id="queueCount"></span></div>
+        <ol class="queue" id="queue"></ol>
+      </div>
+
+      <div class="panel" id="step-commit">
+        <div class="step-flag"><span>Step 3</span> Commit &amp; share</div>
+        <div class="panel-head"><h2>First-hour action plan <span class="help" tabindex="0" role="note" aria-label="Help: action plan" data-tip="A ready-to-run checklist for the first operating hour, generated from the ranking.">i</span></h2></div>
+        <ol class="action-plan" id="actionPlan"></ol>
+        <div class="dispatch-actions">
+          <button class="primary-btn" id="commitDispatch" title="Save this dispatch as a snapshot in the database (it appears in Dispatch history below)">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+            Commit dispatch
+          </button>
+          <button class="ghost-btn" id="copyBrief">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy brief
+          </button>
+          <button class="ghost-btn" id="exportReceipt">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+            Export PNG
+          </button>
+        </div>
+        <p class="dispatch-caption"><strong>Commit</strong> saves a snapshot to the database · <strong>Copy</strong> / <strong>Export</strong> hand the brief off to your team.</p>
+        <div class="receipt-preview" id="receiptPanel" hidden>
+          <img id="receiptImg" alt="Dispatch brief receipt preview" />
+          <a class="ghost-btn" id="downloadReceipt" download="reliefgrid-dispatch-brief.png">Download PNG</a>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Dispatch history</h2><span class="muted">committed plans · saved in DB</span></div>
+        <ul class="history" id="history"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>ReliefGrid · Beyond Tomorrow Summit</span>
+    <span class="dim">FastAPI · SQLite · live data from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> · transparent priority scoring</span>
+  </footer>
+
+  <!-- ── Onboarding ────────────────────────────────────────────── -->
+  <div class="modal-backdrop" id="onboarding" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="obTitle">
+      <button class="modal-close" id="obClose" type="button" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <span class="ob-eyebrow">ReliefGrid · Beyond Tomorrow Summit</span>
+      <h2 id="obTitle">Decide who to help first.</h2>
+      <p class="ob-lede">When supplies, teams, and time are scarce, ReliefGrid turns real-world signals into one clear answer: which area to help first, why, and what to do in the first hour.</p>
+      <ol class="ob-steps">
+        <li><span>1</span><div><strong>Add real locations</strong><em>Search any place — live population, weather-based severity &amp; distance load automatically.</em></div></li>
+        <li><span>2</span><div><strong>Review the priority</strong><em>See the ranked zones, the response map, and the recommended first move.</em></div></li>
+        <li><span>3</span><div><strong>Commit &amp; share</strong><em>Save the dispatch to the database, then copy or export the brief.</em></div></li>
+      </ol>
+      <button class="primary-btn ob-cta" id="obStart" type="button">Got it — let's start</button>
+      <p class="ob-foot">Live data from Open-Meteo · no account needed · your work stays in this app's local database.</p>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

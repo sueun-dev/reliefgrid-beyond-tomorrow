@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+*.db
+*.db-journal
+.git/
+legacy/
+outputs/
+*.zip
+*.webm
+*.pptx
+node_modules/
+.DS_Store
