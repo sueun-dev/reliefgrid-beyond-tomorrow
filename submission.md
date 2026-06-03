@@ -8,6 +8,10 @@ ReliefGrid
 
 Prioritize response before the crisis spreads.
 
+## Hackathon Fit
+
+ReliefGrid is a social impact, smart automation, and healthcare / climate resilience prototype for the Beyond Tomorrow Summit. The challenge asks for future-facing technology with real-world applicability, scalability, usability, technical execution, and a clear problem-solving approach. ReliefGrid answers that by helping local teams prioritize emergency response when supplies, staffing, transport, and communications are constrained.
+
 ## Project Description
 
 ReliefGrid helps local teams decide where limited emergency supplies should go first. It turns noisy crisis signals into a dispatch brief: the top response zone, why it is first, which supplies to send, what to do in the first operating hour, and what fallback to use if the plan slips.
@@ -41,6 +45,12 @@ ReliefGrid is a small but concrete step toward more usable emergency coordinatio
 
 HTML, CSS, JavaScript, Canvas API, localStorage, MediaRecorder.
 
+## Category Positioning
+
+Primary: Social Impact Solutions, Smart Automation, Healthcare Technology, Sustainability / Climate Innovation.
+
+Secondary: Data & Analytics Platforms, Productivity Solutions.
+
 ## Setup Instructions
 
 1. Run:
@@ -63,4 +73,3 @@ HTML, CSS, JavaScript, Canvas API, localStorage, MediaRecorder.
 - GitHub repository:
 - Demo video:
 - Live demo:
-

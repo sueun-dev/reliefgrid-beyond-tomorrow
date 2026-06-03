@@ -18,6 +18,20 @@ Lead with this:
 
 Do not frame it as a generic dashboard. The strongest angle is transparent crisis prioritization plus an operational output.
 
+## What The Hackathon Wants
+
+This hackathon does not require one narrow sponsor API or one fixed problem statement. It wants a future-facing working prototype that solves a real problem and can be judged on originality, technical execution, real-world impact, scalability, usability, and clear presentation.
+
+ReliefGrid should be positioned as:
+
+- Social Impact Solutions
+- Smart Automation
+- Healthcare Technology
+- Sustainability / Climate Innovation
+- Data & Analytics Platforms
+
+Avoid leading with cybersecurity unless the product is explicitly reframed around trusted emergency reports or misinformation defense. The current strongest fit is climate / public-health emergency coordination with transparent automation.
+
 ## Rubric Mapping
 
 ### Innovation & Creativity, 25%
@@ -39,4 +53,3 @@ The first screen is the actual operating surface. Judges see the top mission, ro
 ## Main Risk
 
 The hackathon asks for GitHub, demo video, pitch deck, and screenshots. The local package is ready, but the external GitHub/video/live links still need to be created by the user.
-
