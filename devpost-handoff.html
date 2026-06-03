@@ -37,6 +37,11 @@
         resize: vertical;
       }
 
+      textarea.single-line-copy {
+        min-height: 58px;
+        resize: none;
+      }
+
       .copy-card,
       .media-card,
       .check-card {
@@ -122,7 +127,7 @@
             <h2>Tagline</h2>
             <button class="tool-button compact" type="button" data-copy="tagline">Copy</button>
           </div>
-          <input id="tagline" readonly value="Prioritize response before the crisis spreads." />
+          <textarea id="tagline" class="single-line-copy" readonly>Prioritize response before the crisis spreads.</textarea>
         </article>
 
         <article class="copy-card">

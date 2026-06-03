@@ -64,6 +64,7 @@ node final-qa.mjs
 - Submit runbook: `SUBMIT_RUNBOOK.md`
 - Final gate status: `FINAL_GATE_STATUS.md`
 - Judge brief: `JUDGE_BRIEF.md`
+- System QA: `SYSTEM_QA.md`
 - Demo script: `demo-script.md`
 - Devpost handoff page: `devpost-handoff.html`
 - Demo video maker: `demo-video-maker.html`
@@ -79,6 +80,7 @@ node final-qa.mjs
 - `qa-check.mjs` - static local QA
 - `final-qa.mjs` - final package and localhost QA
 - `external-link-check.mjs` - public external link smoke check
+- `SYSTEM_QA.md` - browser-tested system QA notes
 - `devpost-handoff.html` - local copy buttons and media checklist
 - `demo-video-maker.html` - local WebM demo generator
 - `build-pitch-deck.mjs` - local PPTX deck generator

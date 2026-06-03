@@ -35,6 +35,12 @@
         background: linear-gradient(90deg, var(--green), var(--blue), var(--amber));
       }
 
+      .download-link[aria-disabled="true"] {
+        pointer-events: none;
+        opacity: 0.52;
+        filter: grayscale(0.45);
+      }
+
       @media (max-width: 980px) {
         .video-maker-shell {
           grid-template-columns: 1fr;
@@ -199,6 +205,11 @@
       }
 
       async function generateVideo(speed = 1) {
+        els.generate.disabled = true;
+        els.preview.disabled = true;
+        els.download.href = "#";
+        els.download.setAttribute("aria-disabled", "true");
+        els.video.hidden = true;
         const stream = canvas.captureStream(15);
         const recorder = new MediaRecorder(stream, { mimeType: pickMimeType(), videoBitsPerSecond: 3600000 });
         const chunks = [];
@@ -232,15 +243,25 @@
         els.download.setAttribute("aria-disabled", "false");
         els.video.src = url;
         els.video.hidden = false;
+        els.generate.disabled = false;
+        els.preview.disabled = false;
         setStatus("WebM ready.", `Generated ${Math.round(blob.size / 1024)} KB.`, 100);
         return blob;
       }
 
       els.preview.addEventListener("click", () => drawSlide(0, 0));
-      els.generate.addEventListener("click", () => generateVideo().catch((error) => setStatus("Could not generate.", error.message, 0)));
+      els.generate.addEventListener("click", () =>
+        generateVideo().catch((error) => {
+          els.generate.disabled = false;
+          els.preview.disabled = false;
+          setStatus("Could not generate.", error.message, 0);
+        })
+      );
+      els.download.addEventListener("click", (event) => {
+        if (els.download.getAttribute("aria-disabled") === "true") event.preventDefault();
+      });
       window.ReliefGridVideo = { drawSlide, generateVideo, slides };
       drawSlide(0, 0);
     </script>
   </body>
 </html>
-

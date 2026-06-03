@@ -52,6 +52,9 @@ const els = {
   downloadReceipt: document.querySelector("#downloadReceipt"),
 };
 
+const allowedTimeWindows = new Set(["6", "12", "24"]);
+const allowedTransportModes = new Set(["bike", "van", "mixed"]);
+
 function numberValue(id) {
   return Number(fields[id].value || 0);
 }
@@ -96,16 +99,35 @@ function renderZones() {
   zones.forEach((zone, index) => {
     const card = document.createElement("div");
     card.className = "zone-card";
-    card.innerHTML = `
-      <div class="zone-title">
-        <strong>${zone.name}</strong>
-        <span>${zone.need} need</span>
-      </div>
-      <label>Severity<input type="number" min="0" max="100" value="${zone.severity}" data-zone="${index}" data-key="severity" /></label>
-      <label>Vulnerable<input type="number" min="0" max="100" value="${zone.vulnerable}" data-zone="${index}" data-key="vulnerable" /></label>
-      <label>Residents<input type="number" min="0" max="1000" value="${zone.residents}" data-zone="${index}" data-key="residents" /></label>
-      <label>Comms<input type="number" min="0" max="100" value="${zone.comms}" data-zone="${index}" data-key="comms" /></label>
-    `;
+
+    const title = document.createElement("div");
+    title.className = "zone-title";
+    const name = document.createElement("strong");
+    name.textContent = zone.name;
+    const need = document.createElement("span");
+    need.textContent = `${zone.need} need`;
+    title.append(name, need);
+    card.appendChild(title);
+
+    [
+      ["Severity", "severity", 0, 100],
+      ["Vulnerable", "vulnerable", 0, 100],
+      ["Residents", "residents", 0, 1000],
+      ["Comms", "comms", 0, 100],
+    ].forEach(([labelText, key, min, max]) => {
+      const label = document.createElement("label");
+      label.textContent = labelText;
+      const input = document.createElement("input");
+      input.type = "number";
+      input.min = String(min);
+      input.max = String(max);
+      input.value = String(zone[key]);
+      input.dataset.zone = String(index);
+      input.dataset.key = key;
+      label.appendChild(input);
+      card.appendChild(label);
+    });
+
     els.zoneList.appendChild(card);
   });
 }
@@ -121,7 +143,14 @@ function makeActionPlan(top, ranked) {
   ];
 }
 
+function hideReceiptExport() {
+  els.receiptPanel.hidden = true;
+  els.receiptPreview.removeAttribute("src");
+  els.downloadReceipt.removeAttribute("href");
+}
+
 function updateOutput() {
+  hideReceiptExport();
   const ranked = rankedZones();
   const top = ranked[0];
   const averageCoverage = Math.round(ranked.reduce((sum, zone) => sum + zone.fit, 0) / ranked.length);
@@ -281,6 +310,59 @@ function exportReceipt() {
   els.receiptPanel.hidden = false;
 }
 
+function normalizeNumber(value, fallback, min = 0, max = Number.POSITIVE_INFINITY) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return fallback;
+  return Math.min(max, Math.max(min, numeric));
+}
+
+function applyPlan(plan) {
+  if (!plan || !Array.isArray(plan.zones) || plan.zones.length < 2) return false;
+
+  fields.incidentName.value = typeof plan.incidentName === "string" && plan.incidentName.trim()
+    ? plan.incidentName.trim()
+    : scenarios.heat.incidentName;
+  fields.timeWindow.value = allowedTimeWindows.has(String(plan.timeWindow)) ? String(plan.timeWindow) : scenarios.heat.timeWindow;
+  fields.transportMode.value = allowedTransportModes.has(String(plan.transportMode)) ? String(plan.transportMode) : scenarios.heat.transportMode;
+
+  const savedResources = plan.resources || {};
+  fields.waterKits.value = normalizeNumber(savedResources.waterKits, scenarios.heat.resources.waterKits, 0, 160);
+  fields.medicalKits.value = normalizeNumber(savedResources.medicalKits, scenarios.heat.resources.medicalKits, 0, 80);
+  fields.coolingUnits.value = normalizeNumber(savedResources.coolingUnits, scenarios.heat.resources.coolingUnits, 0, 40);
+  fields.fieldTeams.value = normalizeNumber(savedResources.fieldTeams, scenarios.heat.resources.fieldTeams, 1, 20);
+
+  zones = plan.zones.map((zone, index) => {
+    const fallback = scenarios.heat.zones[index % scenarios.heat.zones.length];
+    return {
+      name: typeof zone.name === "string" && zone.name.trim() ? zone.name.trim() : fallback.name,
+      need: typeof zone.need === "string" && zone.need.trim() ? zone.need.trim() : fallback.need,
+      residents: normalizeNumber(zone.residents, fallback.residents, 0, 1000),
+      vulnerable: normalizeNumber(zone.vulnerable, fallback.vulnerable, 0, 100),
+      severity: normalizeNumber(zone.severity, fallback.severity, 0, 100),
+      distance: normalizeNumber(zone.distance, fallback.distance, 0, 80),
+      comms: normalizeNumber(zone.comms, fallback.comms, 0, 100),
+      x: normalizeNumber(zone.x, fallback.x, 0.05, 0.95),
+      y: normalizeNumber(zone.y, fallback.y, 0.05, 0.95),
+    };
+  });
+
+  renderZones();
+  updateOutput();
+  els.saveNote.textContent = "Loaded saved local plan.";
+  return true;
+}
+
+function loadSavedPlan() {
+  try {
+    const saved = localStorage.getItem("reliefgrid-plan");
+    if (!saved) return false;
+    return applyPlan(JSON.parse(saved));
+  } catch {
+    localStorage.removeItem("reliefgrid-plan");
+    return false;
+  }
+}
+
 function savePlan() {
   localStorage.setItem(
     "reliefgrid-plan",
@@ -306,6 +388,13 @@ function loadScenario(key) {
   zones = structuredClone(scenario.zones);
   renderZones();
   updateOutput();
+  els.saveNote.textContent = `${key === "flood" ? "Flood" : "Heatwave"} scenario loaded.`;
+}
+
+function resetPlan() {
+  localStorage.removeItem("reliefgrid-plan");
+  loadScenario("heat");
+  els.saveNote.textContent = "Reset to the default heatwave scenario.";
 }
 
 function attachEvents() {
@@ -313,7 +402,7 @@ function attachEvents() {
   document.querySelector("#loadFlood").addEventListener("click", () => loadScenario("flood"));
   document.querySelector("#recalculate").addEventListener("click", updateOutput);
   document.querySelector("#savePlan").addEventListener("click", savePlan);
-  document.querySelector("#resetPlan").addEventListener("click", () => loadScenario("heat"));
+  document.querySelector("#resetPlan").addEventListener("click", resetPlan);
   document.querySelector("#exportBrief").addEventListener("click", exportReceipt);
   document.querySelector("#copyBrief").addEventListener("click", async () => {
     await navigator.clipboard.writeText(buildBriefText());
@@ -328,9 +417,11 @@ function attachEvents() {
   });
 }
 
-renderZones();
 attachEvents();
-updateOutput();
+if (!loadSavedPlan()) {
+  renderZones();
+  updateOutput();
+}
 
 window.ReliefGrid = {
   rankedZones,
@@ -338,4 +429,5 @@ window.ReliefGrid = {
   buildReceiptCanvas,
   exportReceiptDataUrl,
   loadScenario,
+  loadSavedPlan,
 };
