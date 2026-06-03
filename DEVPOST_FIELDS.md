@@ -1,6 +1,7 @@
 # Devpost Fields
 
-Use this as the paste-ready field guide. Do not click final submit from an automated tool.
+Paste-ready field guide for the Beyond Tomorrow Summit submission.
+Do **not** click final submit from an automated tool — review on the Devpost page first.
 
 ## Project Name
 
@@ -8,63 +9,85 @@ ReliefGrid
 
 ## Tagline
 
-Prioritize response before the crisis spreads.
+Real-data emergency dispatch — decide who to help first when resources are scarce.
+
+## Elevator Pitch (Devpost short description, ≤ 200 chars)
+
+ReliefGrid turns live real-world data into one clear emergency decision: who to help
+first, why, and what to do in the first hour — a real FastAPI + SQLite full stack.
 
 ## Built With
 
-Python, FastAPI, Uvicorn, SQLAlchemy, SQLite, Pydantic, HTML, CSS, JavaScript (ES modules), Canvas API
+Python, FastAPI, Uvicorn, SQLAlchemy, SQLite, Pydantic, httpx, Open-Meteo API
+(geocoding + weather), HTML, CSS, JavaScript (ES modules), Canvas API, Docker
 
-## Hackathon Fit
+## Inspiration
 
-ReliefGrid is built for the Beyond Tomorrow Summit prompt as a social impact, smart automation, and healthcare / climate resilience project. The official challenge asks for future-facing technology that solves real-world problems with innovation, technical execution, scalability, usability, and a clear problem-solving approach. ReliefGrid focuses on the emergency coordination gap: when a community has limited supplies, weak communications, and several urgent zones at once, the app helps responders make the first decision faster and explain it clearly — backed by a real API and database, not just a single screen.
+Local emergencies rarely fail because nobody cares — they fail because the team has
+incomplete signals, scarce supplies, weak comms, and no shared priority order. We
+wanted a tool that makes that first tradeoff explicit and defensible, using **real
+data** instead of a hand-waved demo.
 
-## Project Description
+## What it does
 
-ReliefGrid helps local teams decide where limited emergency supplies should go first. It turns noisy crisis signals into a dispatch brief: the top response zone, why it is first, which supplies to send, what to do in the first operating hour, and what fallback to use if the plan slips.
+ReliefGrid helps local teams decide where limited emergency supplies should go first.
+It turns crisis signals into a dispatch brief: the top response zone, why it is first,
+which supplies to send, the first-hour action plan, and a fallback if the plan slips.
 
-It is a real full-stack application: a FastAPI backend computes the priority scoring server-side, a SQLite database persists incidents, zones, and every committed dispatch, and a single-page frontend drives it through a documented REST API (browsable at `/docs`). The prototype is built for heatwaves, floods, clinic outages, and community resource shortages where responders need a clear decision faster than a full command center can be assembled.
+Every response zone is a **real place**. Its coordinates, population, and travel
+distance are pulled live from the public Open-Meteo geocoding API, and a heat/flood
+**severity** signal is derived from live weather (apparent temperature / precipitation).
+Nothing is fabricated — the only operator-entered signals are the two with no public
+real-time feed (% vulnerable residents and % working comms), and the UI labels every
+field as **live**, **derived**, or **you report** so the data provenance is honest.
 
-## Problem
+## How we built it
 
-In fast-moving local emergencies, teams often have scarce supplies, incomplete communications, and several neighborhoods that all seem urgent. Without a shared priority model, the first response can go to the loudest report instead of the highest-risk zone.
+A real full stack:
+- **Backend** — FastAPI computes the priority scoring server-side; a transparent,
+  unit-tested rule (severity, vulnerable residents, exposure, comms, resource fit,
+  travel friction, scaled by the operating window). Self-documenting REST API at `/docs`.
+- **Database** — SQLite via SQLAlchemy 2.0 persists incidents, zones, and every
+  committed dispatch as a timestamped audit trail.
+- **Live data** — an Open-Meteo integration (httpx) geocodes real places, pulls live
+  weather, and computes great-circle distances; the demo scenarios are seeded from
+  real cities at first boot.
+- **Frontend** — a guided single-page app (vanilla ES modules + Canvas) with onboarding,
+  a 3-step flow, inline help, a data-source legend, response map, and PNG export.
+- **Ops** — Dockerfile + render.yaml for one-click public deploy; a 29-check in-process
+  QA gate.
 
-## Solution Overview
+## Challenges we ran into
 
-ReliefGrid scores each response zone using severity, vulnerable residents, population exposure, comms reliability, resource fit, and travel friction, scaled by how tight the operating window is. It shows the priority route on a response map and produces a dispatch brief that can be committed to a database, copied, or exported as a PNG. Because scoring runs on the server and data is persisted, teams can revisit incidents and audit every committed dispatch.
+Keeping the data honest. There is no public feed for "supplies on hand," comms
+reliability, or % vulnerable residents, so rather than invent them we made those
+explicit operator inputs and labelled everything by provenance — real where a real
+source exists, operator-entered where it doesn't.
 
-## Key Features
+## Accomplishments / What makes it different
 
-1. Heatwave and flood scenarios, seeded automatically into the database.
-2. Editable incident setup, resource pool, and per-zone signals (live sliders).
-3. Transparent, server-side priority scoring that recomputes on every edit.
-4. Response map with ranked routes from the relief hub.
-5. Impact / coverage / residual-risk metrics.
-6. Dispatch brief with first-hour action plan and explicit fallback.
-7. Commit dispatches to the database with timestamped history (audit trail).
-8. Copy brief and PNG export.
-9. Interactive, self-documenting REST API at `/docs`.
+- **Real data, not dummy data** — live geocoding + weather for every zone.
+- **Transparent scoring** — inspectable server-side rule, not a black box.
+- **Honest provenance** — each field marked live / derived / operator-entered.
+- **A real backend + database**, not a single-screen toy: persistence, audit history,
+  and a documented API.
 
-## Intended Impact
+## What's next
 
-ReliefGrid helps community teams move from scattered signals to a shared first move. It runs locally, keeps the output simple enough to hand off quickly, and — because it is a real service with persistence — extends cleanly toward multi-team, hosted coordination.
-
-## Technology Stack
-
-Backend: Python, FastAPI, Uvicorn, SQLAlchemy 2.0 ORM, Pydantic, SQLite.
-Frontend: HTML, CSS, JavaScript (ES modules), Canvas API.
-Testing: in-process FastAPI TestClient QA suite (27 checks).
+Multi-team hosted coordination, real river-discharge flood modelling, and optional
+integrations for live shelter/clinic capacity feeds.
 
 ## Category Positioning
 
-Primary: Social Impact Solutions, Smart Automation, Healthcare Technology, Sustainability / Climate Innovation.
+Primary: Social Impact, Smart Automation, Healthcare Technology, Sustainability / Climate.
+Secondary: Data & Analytics, Productivity.
 
-Secondary: Data & Analytics Platforms, Productivity Solutions.
+## Required Links
 
-## Required Links To Fill
+- **GitHub repository:** https://github.com/sueun-dev/reliefgrid-beyond-tomorrow
+- **Live demo:** _deploy in one click — README "Deploy to Render" button — then paste the `https://…onrender.com` URL here_
+- **Demo video:** _record a 60–75s walkthrough (see `demo-script.md`)_
+- **Thumbnail / screenshots:** `reliefgrid-brief.png` (committed); capture the dashboard from the running app
 
-- GitHub repository: https://github.com/sueun-dev/reliefgrid-beyond-tomorrow
-- Demo video: _record a 60–75s walkthrough from the running app (see `demo-script.md`)_
-- Live demo: _run locally via `./run.sh`, or deploy the FastAPI service (see `SUBMIT_RUNBOOK.md`)_
-- Screenshots: capture from the running app at <http://127.0.0.1:8031/>
-
-The official page asks for a GitHub repository, demo video, pitch deck, and screenshots. Preview the final Devpost page before submit.
+> The official page asks for a GitHub repository, demo video, and screenshots.
+> Preview the final Devpost page before submitting.
