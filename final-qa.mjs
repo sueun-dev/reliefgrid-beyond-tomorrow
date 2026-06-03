@@ -73,6 +73,7 @@ const requiredPackageEntries = [
   "JUDGE_BRIEF.md",
   "FINAL_GATE_STATUS.md",
   "AWARD_READINESS_AUDIT.md",
+  "PUBLIC_LINKS_READINESS.md",
   "SYSTEM_QA.md",
   "demo-script.md",
   "build-pitch-deck.mjs",

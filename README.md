@@ -64,6 +64,7 @@ node final-qa.mjs
 - Submit runbook: `SUBMIT_RUNBOOK.md`
 - Final gate status: `FINAL_GATE_STATUS.md`
 - Award readiness audit: `AWARD_READINESS_AUDIT.md`
+- Public links readiness: `PUBLIC_LINKS_READINESS.md`
 - Judge brief: `JUDGE_BRIEF.md`
 - System QA: `SYSTEM_QA.md`
 - Demo script: `demo-script.md`
@@ -83,6 +84,7 @@ node final-qa.mjs
 - `external-link-check.mjs` - public external link smoke check
 - `SYSTEM_QA.md` - browser-tested system QA notes
 - `AWARD_READINESS_AUDIT.md` - judging-rubric readiness and remaining risk notes
+- `PUBLIC_LINKS_READINESS.md` - GitHub, live demo, and public video link readiness notes
 - `devpost-handoff.html` - local copy buttons and media checklist
 - `demo-video-maker.html` - local WebM demo generator
 - `build-pitch-deck.mjs` - local PPTX deck generator

@@ -11,7 +11,8 @@ Current read: submit-worthy once external links are created.
 ## Official State Checked
 
 - Official deadline: June 5, 2026, 11:45 PM EDT.
-- Official overview participant count: 306.
+- Official overview participant count: 307.
+- Official project gallery is not published yet, so competitor quality is still unknown.
 - Official prize pool: $1,750 in cash.
 - Required deliverables: project description, demo video, GitHub repository, presentation / pitch deck, screenshots, technology stack.
 - Judging: Innovation & Creativity 25%, Technical Implementation 25%, Real-World Impact & Scalability 25%, Design / Presentation / UX 25%.

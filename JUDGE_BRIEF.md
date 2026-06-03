@@ -5,7 +5,8 @@ Checked against the official Beyond Tomorrow Summit 30094 page on June 3, 2026.
 ## Current Competition Snapshot
 
 - Official deadline: June 5, 2026, 11:45 PM EDT.
-- Official page shows 306 participants.
+- Official page shows 307 participants.
+- Project gallery is not published yet, so competitor project quality cannot be compared directly.
 - Public, online, students-only eligibility.
 - Prize pool: $1,750 in cash.
 - Required deliverables include project description, demo video, GitHub repository, presentation / pitch deck, screenshots, and technology stack.
