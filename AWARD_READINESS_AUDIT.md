@@ -6,7 +6,7 @@ Checked against the official Beyond Tomorrow Summit 30094 page on June 3, 2026.
 
 ReliefGrid is submit-worthy and credible for judging. I would keep it as the current priority, because it matches all four official judging categories and the local system has a real working prototype, media assets, pitch deck, and browser QA evidence.
 
-This is not a guaranteed win. The current official page shows 307 participants, and the project gallery is not published yet, so competitor project quality cannot be compared directly. The remaining external-link work can still weaken the submission if the GitHub, demo video, or live demo link is not public and clean. But the project is now strong enough that more random feature work is lower value than getting the public submission links right.
+This is not a guaranteed win. The current official page shows 307 participants, and the project gallery is not published yet, so competitor project quality cannot be compared directly. The public GitHub, live demo, and demo video page links are now created and checked. The project is strong enough that more random feature work is lower value than a careful Devpost preview and final link/media check.
 
 ## Rubric Score Read
 
@@ -35,18 +35,12 @@ Avoid leading with cybersecurity. The official challenge accepts cybersecurity, 
 
 ## Biggest Remaining Risks
 
-1. Public links are not created yet.
-2. Demo video must open without login.
-3. GitHub repository must open without login.
-4. Live demo, if included, must not point to `127.0.0.1`.
-5. Final Devpost preview must show the screenshots, pitch deck, demo video, and repo link together.
-6. Gallery is unpublished, so the award read cannot be benchmarked against visible competing submissions yet.
+1. Devpost must accept the GitHub Pages video page as the demo video URL; otherwise upload `reliefgrid-demo-video.webm` to a video/file host and use that URL.
+2. Final Devpost preview must show the screenshots, pitch deck, demo video, live demo, and repo link together.
+3. Gallery is unpublished, so the award read cannot be benchmarked against visible competing submissions yet.
 
 ## Stop / Continue Decision
 
 Stop building new features unless QA fails or a required submission link breaks. Continue only on:
 
-- public GitHub repository setup,
-- public demo video URL,
-- optional public live demo,
 - final Devpost preview check before the user clicks submit.

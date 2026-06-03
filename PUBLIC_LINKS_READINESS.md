@@ -6,14 +6,15 @@ Checked on June 3, 2026.
 
 - GitHub CLI is authenticated as `sueun-dev`.
 - Local branch is `main`.
-- No remote is currently configured.
-- `sueun-dev/reliefgrid-beyond-tomorrow` does not currently exist on GitHub.
+- Remote is configured as `origin` at `https://github.com/sueun-dev/reliefgrid-beyond-tomorrow.git`.
+- `sueun-dev/reliefgrid-beyond-tomorrow` exists and is public.
+- GitHub Pages is enabled from the `main` branch root.
 - Secret-pattern scan returned no matches across tracked source/docs, excluding binary media and the zip package.
 - Required local media exists: `reliefgrid-demo-video.webm`, `reliefgrid-pitch-deck.pptx`, `reliefgrid-main.png`, `reliefgrid-brief.png`, `reliefgrid-mobile.png`.
 
-## Recommended Public URLs
+## Public URLs
 
-Use these exact targets once the repo is published:
+Use these exact targets for Devpost:
 
 - GitHub repository: `https://github.com/sueun-dev/reliefgrid-beyond-tomorrow`
 - Live demo: `https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/`
@@ -26,17 +27,9 @@ For the demo video URL, safest options are:
 2. Upload `reliefgrid-demo-video.webm` as an unlisted video if the platform accepts WebM.
 3. Use the GitHub raw file link only if Devpost accepts it as a video URL.
 
-## Publish Commands If User Approves
+## Verification
 
-Do not run these until the user approves public publishing.
-
-```bash
-gh repo create sueun-dev/reliefgrid-beyond-tomorrow --public --source . --remote origin --push
-```
-
-After the push, enable GitHub Pages from the `main` branch root in GitHub settings, or use the GitHub API if available.
-
-Then verify:
+These public links returned `200` after publish:
 
 ```bash
 node external-link-check.mjs https://github.com/sueun-dev/reliefgrid-beyond-tomorrow
@@ -49,4 +42,4 @@ Also open each link in a private/incognito browser before final Devpost submit.
 
 ## Submit Boundary
 
-Creating public GitHub / live demo links is still before final Devpost submit. The user should still click the final Devpost submit button manually.
+Public GitHub / live demo links are now created. The user should still click the final Devpost submit button manually.

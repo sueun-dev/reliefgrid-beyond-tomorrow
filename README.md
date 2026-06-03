@@ -6,6 +6,8 @@ ReliefGrid is a Beyond Tomorrow Summit submission for local responders, student 
 
 The prototype turns incident signals into a dispatch brief: the top zone, why it is first, which supplies to send, what to do in the first hour, and what fallback to use if the plan slips.
 
+Live demo: https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/
+
 ![ReliefGrid main dashboard](./reliefgrid-main.png)
 
 ## Why This Exists

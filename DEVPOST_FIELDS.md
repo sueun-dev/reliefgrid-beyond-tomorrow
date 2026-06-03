@@ -58,8 +58,8 @@ Secondary: Data & Analytics Platforms, Productivity Solutions.
 
 ## Required Links To Fill
 
-- GitHub repository:
-- Demo video:
-- Live demo:
+- GitHub repository: https://github.com/sueun-dev/reliefgrid-beyond-tomorrow
+- Demo video: https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/demo-video.html
+- Live demo: https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/
 
-The official page asks for a GitHub repository, demo video, pitch deck, and screenshots. Fill the external URLs before final submit.
+The official page asks for a GitHub repository, demo video, pitch deck, and screenshots. These external URLs are public; still preview the final Devpost page before submit.

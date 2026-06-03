@@ -70,6 +70,6 @@ Secondary: Data & Analytics Platforms, Productivity Solutions.
 
 ## Links To Fill Before Final Submission
 
-- GitHub repository:
-- Demo video:
-- Live demo:
+- GitHub repository: https://github.com/sueun-dev/reliefgrid-beyond-tomorrow
+- Demo video: https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/demo-video.html
+- Live demo: https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/

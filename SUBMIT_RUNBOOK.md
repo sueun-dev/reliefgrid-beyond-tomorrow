@@ -26,16 +26,17 @@ Expected ending:
 ReliefGrid final QA passed
 ```
 
-## 3. Create External Links
+## 3. Use Public Links
 
 Required by the hackathon:
 
-- GitHub repository link.
-- Demo video link.
+- GitHub repository link: https://github.com/sueun-dev/reliefgrid-beyond-tomorrow
+- Demo video link: https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/demo-video.html
+- Live demo link: https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/
 - Pitch deck file.
 - Screenshots or product images.
 
-Use `reliefgrid-demo-video.webm` for the demo video route, or record from the app/pitch deck if preferred.
+Use `reliefgrid-demo-video.webm` only if Devpost rejects the GitHub Pages video page.
 
 ## 4. Check External Links
 
@@ -77,4 +78,3 @@ Check:
 - The pitch deck is attached.
 - The screenshots are visible.
 - User clicks final submit.
-

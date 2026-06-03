@@ -6,7 +6,7 @@ Do not click final Devpost submit from Codex. The user submits.
 
 ReliefGrid is a good urgent second target because the deadline is close and the official prompt accepts broad future-facing prototypes across smart automation, healthcare, sustainability, developer tools, and social impact.
 
-Current read: submit-worthy once external links are created.
+Current read: submit-ready before the user's final Devpost submit.
 
 ## Official State Checked
 
@@ -24,9 +24,9 @@ Current read: submit-worthy once external links are created.
 | Project title | Ready | `ReliefGrid` in `DEVPOST_FIELDS.md`, `submission.md`, `devpost-handoff.html` |
 | Project description | Ready | `DEVPOST_FIELDS.md`, `submission.md` |
 | Problem / solution / impact | Ready | `DEVPOST_FIELDS.md`, `JUDGE_BRIEF.md` |
-| Working prototype | Ready locally | `index.html`, `styles.css`, `app.js` |
-| Demo video | Locally ready, external link still needed | `reliefgrid-demo-video.webm`, `demo-video-maker.html` |
-| GitHub repository | User-side | `SUBMIT_RUNBOOK.md` |
+| Working prototype | Ready locally and public | `index.html`, `styles.css`, `app.js`, https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/ |
+| Demo video | Ready locally and public | `reliefgrid-demo-video.webm`, `demo-video.html`, https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/demo-video.html |
+| GitHub repository | Ready and public | https://github.com/sueun-dev/reliefgrid-beyond-tomorrow |
 | Pitch deck | Ready locally | `reliefgrid-pitch-deck.pptx` |
 | Screenshots | Ready locally | `reliefgrid-main.png`, `reliefgrid-brief.png`, `reliefgrid-mobile.png` |
 | Final Devpost submit | User-side | User clicks final submit |
@@ -40,11 +40,8 @@ Current read: submit-worthy once external links are created.
 
 ## Final User Actions
 
-1. Publish a GitHub repository or live demo.
-2. Upload `reliefgrid-demo-video.webm` or another clean recording.
-3. Run `node external-link-check.mjs <url>` for each public link.
-4. Open each link in private/incognito.
-5. Attach `reliefgrid-pitch-deck.pptx`.
-6. Upload screenshots.
-7. Preview Devpost.
-8. User clicks final submit.
+1. Paste the public GitHub, demo video page, and live demo links from `DEVPOST_FIELDS.md`.
+2. Attach `reliefgrid-pitch-deck.pptx`.
+3. Upload screenshots.
+4. Preview Devpost.
+5. User clicks final submit.
