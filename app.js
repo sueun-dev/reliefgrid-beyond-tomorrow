@@ -241,6 +241,30 @@ function buildBriefText() {
   ].join("\n");
 }
 
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Fall through to the legacy selection path when browser permissions block Clipboard API.
+    }
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.top = "-1000px";
+  textarea.style.left = "-1000px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  textarea.setSelectionRange(0, text.length);
+  const copied = document.execCommand("copy");
+  textarea.remove();
+  return copied;
+}
+
 function drawWrappedCanvasText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 2) {
   const words = String(text).split(/\s+/).filter(Boolean);
   const lines = [];
@@ -405,8 +429,8 @@ function attachEvents() {
   document.querySelector("#resetPlan").addEventListener("click", resetPlan);
   document.querySelector("#exportBrief").addEventListener("click", exportReceipt);
   document.querySelector("#copyBrief").addEventListener("click", async () => {
-    await navigator.clipboard.writeText(buildBriefText());
-    els.saveNote.textContent = "Brief copied to clipboard.";
+    const copied = await copyText(buildBriefText());
+    els.saveNote.textContent = copied ? "Brief copied to clipboard." : "Clipboard blocked. Use Export PNG for handoff.";
   });
   Object.values(fields).forEach((field) => field.addEventListener("input", updateOutput));
   els.zoneList.addEventListener("input", (event) => {

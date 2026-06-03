@@ -158,6 +158,14 @@ The prototype is built for heatwaves, floods, clinic outages, and community reso
 
         <article class="copy-card">
           <div class="copy-head">
+            <h2>Judge Summary</h2>
+            <button class="tool-button compact" type="button" data-copy="judgeSummary">Copy</button>
+          </div>
+          <textarea id="judgeSummary" readonly>ReliefGrid maps directly to the four judging areas: it is original because it focuses on the emergency decision gap, technically functional because the scoring model, route map, local save, copy, export, and video generator all work locally, impactful because it targets heatwaves, floods, clinic outages, and scarce community resources, and presentation-ready because the first screen is the actual operating surface rather than a mock landing page.</textarea>
+        </article>
+
+        <article class="copy-card">
+          <div class="copy-head">
             <h2>Category Positioning</h2>
             <button class="tool-button compact" type="button" data-copy="categories">Copy</button>
           </div>
@@ -231,11 +239,28 @@ It works locally, saves the plan in the browser, copies a brief, and exports a P
     </main>
 
     <script>
+      async function copyText(target) {
+        const text = target.value;
+        if (navigator.clipboard?.writeText) {
+          try {
+            await navigator.clipboard.writeText(text);
+            return true;
+          } catch {
+            // Keep going with a selection-based fallback for stricter browsers.
+          }
+        }
+
+        target.focus({ preventScroll: true });
+        target.select();
+        target.setSelectionRange(0, text.length);
+        return document.execCommand("copy");
+      }
+
       document.querySelectorAll("[data-copy]").forEach((button) => {
         button.addEventListener("click", async () => {
           const target = document.querySelector(`#${button.dataset.copy}`);
-          await navigator.clipboard.writeText(target.value);
-          button.textContent = "Copied";
+          const copied = await copyText(target);
+          button.textContent = copied ? "Copied" : "Selected";
           setTimeout(() => {
             button.textContent = "Copy";
           }, 1200);
