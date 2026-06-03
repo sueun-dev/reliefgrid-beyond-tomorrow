@@ -170,8 +170,10 @@ frontend/
 serve.py             convenience entry point (python serve.py)
 run.sh               one-command venv + install + run
 qa.py                in-process end-to-end QA gate
-legacy/              the original static prototype, preserved for reference
 ```
+
+> The original static prototype was removed from the working tree for a clean
+> submission build; it remains recoverable in git history (commit `8dd947e`).
 
 ## Submission prep
 

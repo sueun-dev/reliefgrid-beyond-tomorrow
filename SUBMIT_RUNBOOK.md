@@ -31,9 +31,9 @@ The screenshots/video must show the new full-stack UI. With the app running:
 
 1. Screenshot the main dashboard (incident + mission + map + queue).
 2. Screenshot the response map and a committed dispatch in history.
-3. Record a 60–75s screen capture following `demo-script.md`.
-
-(The legacy static-prototype screenshots in `legacy/` should NOT be reused.)
+3. For the dispatch-brief image, just use the app's **Export PNG** (a current
+   sample is committed as `reliefgrid-brief.png`).
+4. Record a 60–75s screen capture following `demo-script.md`.
 
 ## 4. Publish the code
 
