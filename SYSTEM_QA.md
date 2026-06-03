@@ -15,6 +15,7 @@ Checked on June 3, 2026 with the Codex in-app browser against `http://127.0.0.1:
 - Demo video page: `demo-video.html` loads the generated WebM, poster, rubric-friendly metadata, and transcript without console errors.
 - Demo video maker: preview render works, full WebM generation completed in browser, progress updates, blob preview, and download state all work.
 - Responsive QA: `/`, `/devpost-handoff.html`, `/demo-video.html`, and `/demo-video-maker.html` were checked at 390 x 844 mobile and desktop widths with no horizontal overflow.
+- Public deployment QA: GitHub repository, live demo, demo video page, direct WebM file, and public handoff all return public `200` responses. The public demo video page loads WebM metadata with duration 55.8 seconds and no console errors.
 
 ## Issues Found And Fixed
 

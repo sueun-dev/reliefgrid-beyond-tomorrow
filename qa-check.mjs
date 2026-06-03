@@ -21,6 +21,7 @@ const requiredFiles = [
   "devpost-handoff.html",
   "demo-video-maker.html",
   "external-link-check.mjs",
+  "public-link-qa.mjs",
   "final-qa.mjs",
   "reliefgrid-main.png",
   "reliefgrid-brief.png",
@@ -49,7 +50,9 @@ const requiredText = [
   ["PUBLIC_LINKS_READINESS.md", "sueun-dev/reliefgrid-beyond-tomorrow"],
   ["PUBLIC_LINKS_READINESS.md", "GitHub Pages is enabled"],
   ["SYSTEM_QA.md", "Issues Found And Fixed"],
+  ["SYSTEM_QA.md", "Public deployment QA"],
   ["FINAL_GATE_STATUS.md", "June 5, 2026, 11:45 PM EDT"],
+  ["public-link-qa.mjs", "ReliefGrid public link QA passed"],
   ["demo-video-maker.html", "MediaRecorder"],
   ["demo-video-maker.html", "reliefgrid-demo-video.webm"],
   ["demo-video.html", "ReliefGrid Demo Video"],
@@ -81,7 +84,7 @@ for (const [file, needle] of requiredText) {
   assert(text(file).includes(needle), `${file} missing expected text: ${needle}`);
 }
 
-for (const file of ["index.html", "devpost-handoff.html", "demo-video-maker.html"]) {
+for (const file of ["index.html", "devpost-handoff.html", "demo-video.html", "demo-video-maker.html"]) {
   const refs = [...text(file).matchAll(/\b(?:src|href)=["']([^"']+)["']/g)].map((match) => match[1]);
   for (const ref of refs) {
     if (ref.startsWith("#") || ref.startsWith("data:") || ref.startsWith("http://") || ref.startsWith("https://")) continue;

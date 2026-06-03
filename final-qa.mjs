@@ -81,6 +81,7 @@ const requiredPackageEntries = [
   "build-pitch-deck.mjs",
   "devpost-handoff.html",
   "demo-video-maker.html",
+  "public-link-qa.mjs",
   "reliefgrid-main.png",
   "reliefgrid-brief.png",
   "reliefgrid-mobile.png",

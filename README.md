@@ -58,6 +58,7 @@ Run QA:
 
 ```bash
 node final-qa.mjs
+node public-link-qa.mjs
 ```
 
 ## Devpost Prep
@@ -84,6 +85,7 @@ node final-qa.mjs
 - `app.js` - scoring, map, dispatch brief, export, save/copy flow
 - `qa-check.mjs` - static local QA
 - `final-qa.mjs` - final package and localhost QA
+- `public-link-qa.mjs` - public GitHub / Pages link QA
 - `external-link-check.mjs` - public external link smoke check
 - `SYSTEM_QA.md` - browser-tested system QA notes
 - `AWARD_READINESS_AUDIT.md` - judging-rubric readiness and remaining risk notes

@@ -8,7 +8,7 @@
     "check": "node --check app.js",
     "qa": "npm run check && node qa-check.mjs",
     "final:qa": "node final-qa.mjs",
+    "public:qa": "node public-link-qa.mjs",
     "link:check": "node external-link-check.mjs"
   }
 }
-

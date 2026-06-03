@@ -32,6 +32,7 @@ For the demo video URL, safest options are:
 These public links returned `200` after publish:
 
 ```bash
+node public-link-qa.mjs
 node external-link-check.mjs https://github.com/sueun-dev/reliefgrid-beyond-tomorrow
 node external-link-check.mjs https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/
 node external-link-check.mjs https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/demo-video.html
