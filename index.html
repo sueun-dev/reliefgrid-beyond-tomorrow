@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="ReliefGrid helps local teams prioritize emergency response missions when supplies, time, and transport are scarce."
+    />
+    <meta property="og:title" content="ReliefGrid | Beyond Tomorrow Summit" />
+    <meta
+      property="og:description"
+      content="A local-first emergency response planner that turns crisis signals into a dispatch brief, resource plan, and recovery fallback."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>ReliefGrid | Beyond Tomorrow Summit</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Beyond Tomorrow prototype</p>
+            <h1>ReliefGrid</h1>
+            <p class="lede">Prioritize community response before a local emergency becomes a wider failure.</p>
+          </div>
+          <div class="top-actions">
+            <button class="tool-button ghost" type="button" id="loadHeat">Heatwave</button>
+            <button class="tool-button ghost" type="button" id="loadFlood">Flood</button>
+            <button class="tool-button" type="button" id="savePlan">Save</button>
+          </div>
+        </header>
+
+        <section class="control-grid" aria-label="ReliefGrid controls">
+          <article class="panel decision-panel">
+            <div class="panel-head">
+              <p class="eyebrow">Incident setup</p>
+              <h2>Name the crisis</h2>
+            </div>
+            <label>
+              Incident
+              <input id="incidentName" value="48-hour heatwave and grid stress" />
+            </label>
+            <div class="input-pair">
+              <label>
+                Time window
+                <select id="timeWindow">
+                  <option value="6">6 hours</option>
+                  <option value="12" selected>12 hours</option>
+                  <option value="24">24 hours</option>
+                </select>
+              </label>
+              <label>
+                Transport
+                <select id="transportMode">
+                  <option value="bike">Bike teams</option>
+                  <option value="van" selected>Van teams</option>
+                  <option value="mixed">Mixed teams</option>
+                </select>
+              </label>
+            </div>
+            <div class="resource-grid">
+              <label>
+                Water kits
+                <input id="waterKits" type="number" min="0" max="160" value="68" />
+              </label>
+              <label>
+                Medical kits
+                <input id="medicalKits" type="number" min="0" max="80" value="24" />
+              </label>
+              <label>
+                Cooling units
+                <input id="coolingUnits" type="number" min="0" max="40" value="11" />
+              </label>
+              <label>
+                Field teams
+                <input id="fieldTeams" type="number" min="1" max="20" value="5" />
+              </label>
+            </div>
+          </article>
+
+          <article class="panel zones-panel">
+            <div class="panel-head split">
+              <div>
+                <p class="eyebrow">Live signals</p>
+                <h2>Response zones</h2>
+              </div>
+              <button class="tool-button compact" type="button" id="recalculate">Recalculate</button>
+            </div>
+            <div class="zone-list" id="zoneList"></div>
+          </article>
+        </section>
+      </section>
+
+      <aside class="result-rail" aria-label="ReliefGrid output">
+        <article class="brief-card">
+          <p class="eyebrow">Dispatch brief</p>
+          <h2 id="topMissionTitle">Send cooling and water to Northside Towers first.</h2>
+          <p id="topMissionText">
+            Highest combined risk from heat exposure, vulnerable residents, and limited backup power.
+          </p>
+          <div class="score-row">
+            <div><span id="impactScore">92</span><small>Impact</small></div>
+            <div><span id="coverageScore">74</span><small>Coverage</small></div>
+            <div><span id="riskScore">18</span><small>Risk left</small></div>
+          </div>
+        </article>
+
+        <article class="panel map-panel">
+          <div class="panel-head split">
+            <div>
+              <p class="eyebrow">Response map</p>
+              <h2>Priority route</h2>
+            </div>
+            <button class="tool-button compact" type="button" id="exportBrief">Export</button>
+          </div>
+          <canvas id="mapCanvas" width="760" height="520" aria-label="ReliefGrid response priority map"></canvas>
+        </article>
+
+        <article class="panel plan-panel">
+          <p class="eyebrow">First operating hour</p>
+          <ol id="actionPlan"></ol>
+          <div class="button-row">
+            <button class="tool-button" type="button" id="copyBrief">Copy brief</button>
+            <button class="tool-button ghost" type="button" id="resetPlan">Reset</button>
+          </div>
+          <p class="save-note" id="saveNote">Local-first. No account or cloud service required.</p>
+        </article>
+      </aside>
+    </main>
+
+    <section class="receipt-export" id="receiptExportPanel" hidden>
+      <div>
+        <p class="eyebrow">PNG export ready</p>
+        <h2>Dispatch brief image</h2>
+      </div>
+      <img id="receiptPreview" alt="Generated ReliefGrid dispatch brief preview" />
+      <a id="downloadReceipt" class="download-link" download="reliefgrid-dispatch-brief.png">Download PNG</a>
+    </section>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
+

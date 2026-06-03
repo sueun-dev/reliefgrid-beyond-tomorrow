@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ReliefGrid Devpost Handoff</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      .handoff-shell {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(360px, 0.92fr) minmax(520px, 1.08fr);
+        gap: 18px;
+        min-height: 100vh;
+        padding: 24px;
+      }
+
+      .copy-stack,
+      .media-stack {
+        display: grid;
+        gap: 14px;
+        align-content: start;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 122px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px;
+        background: rgba(255, 250, 240, 0.92);
+        color: var(--ink);
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        line-height: 1.42;
+        resize: vertical;
+      }
+
+      .copy-card,
+      .media-card,
+      .check-card {
+        border: 1px solid var(--hard-line);
+        border-radius: 8px;
+        padding: 14px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(20px) saturate(132%);
+      }
+
+      .copy-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+
+      .media-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .media-card img,
+      .media-card video {
+        width: 100%;
+        border: 1px solid var(--hard-line);
+        border-radius: 8px;
+        background: #13201d;
+      }
+
+      .media-card img {
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        object-position: top left;
+      }
+
+      .check-list {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .check-list li {
+        border-left: 7px solid var(--amber);
+        border-radius: 8px;
+        padding: 10px;
+        background: rgba(255, 250, 240, 0.86);
+        font-weight: 900;
+      }
+
+      @media (max-width: 1080px) {
+        .handoff-shell,
+        .media-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="handoff-shell">
+      <section class="copy-stack">
+        <article class="copy-card">
+          <p class="eyebrow">ReliefGrid Devpost Handoff</p>
+          <h1>ReliefGrid</h1>
+          <p class="lede">Copy final fields, verify media, then let the user submit.</p>
+        </article>
+
+        <article class="copy-card">
+          <div class="copy-head">
+            <h2>Project Name</h2>
+            <button class="tool-button compact" type="button" data-copy="projectName">Copy</button>
+          </div>
+          <input id="projectName" readonly value="ReliefGrid" />
+        </article>
+
+        <article class="copy-card">
+          <div class="copy-head">
+            <h2>Tagline</h2>
+            <button class="tool-button compact" type="button" data-copy="tagline">Copy</button>
+          </div>
+          <input id="tagline" readonly value="Prioritize response before the crisis spreads." />
+        </article>
+
+        <article class="copy-card">
+          <div class="copy-head">
+            <h2>Description</h2>
+            <button class="tool-button compact" type="button" data-copy="description">Copy</button>
+          </div>
+          <textarea id="description" readonly>ReliefGrid helps local teams decide where limited emergency supplies should go first. It turns noisy crisis signals into a dispatch brief: the top response zone, why it is first, which supplies to send, what to do in the first operating hour, and what fallback to use if the plan slips.
+
+The prototype is built for heatwaves, floods, clinic outages, and community resource shortages where responders need a clear decision faster than a full command center can be assembled.</textarea>
+        </article>
+
+        <article class="copy-card">
+          <div class="copy-head">
+            <h2>Solution Overview</h2>
+            <button class="tool-button compact" type="button" data-copy="overview">Copy</button>
+          </div>
+          <textarea id="overview" readonly>ReliefGrid scores each response zone using severity, vulnerable residents, population exposure, comms reliability, resource fit, and travel friction. It shows the priority route on a canvas map and produces a dispatch brief that can be copied, saved locally, or exported as a PNG.</textarea>
+        </article>
+
+        <article class="copy-card">
+          <div class="copy-head">
+            <h2>Demo Script</h2>
+            <button class="tool-button compact" type="button" data-copy="script">Copy</button>
+          </div>
+          <textarea id="script" readonly>ReliefGrid is for local emergency teams that have scarce supplies and several urgent zones at once.
+
+The team enters the incident, time window, transport mode, available supplies, and the signals coming from each response zone.
+
+ReliefGrid ranks zones using severity, vulnerable residents, population exposure, comms reliability, resource fit, and travel friction.
+
+The output is a dispatch brief: top zone, why it wins, first-hour actions, and a fallback if supplies or communications fail.
+
+It works locally, saves the plan in the browser, copies a brief, and exports a PNG handoff. The goal is simple: prioritize response before the crisis spreads.</textarea>
+        </article>
+      </section>
+
+      <section class="media-stack">
+        <article class="media-card">
+          <p class="eyebrow">Required deliverables</p>
+          <h2>Attach these before submit</h2>
+          <ul class="check-list">
+            <li>GitHub repository URL: user-side external link.</li>
+            <li>Demo video URL: upload `reliefgrid-demo-video.webm` or a cleaner recording.</li>
+            <li>Pitch deck: `reliefgrid-pitch-deck.pptx`.</li>
+            <li>User clicks final submit after Devpost preview.</li>
+          </ul>
+        </article>
+
+        <article class="media-card">
+          <p class="eyebrow">Demo video</p>
+          <h2>Local WebM artifact</h2>
+          <p><strong>reliefgrid-demo-video.webm</strong> is generated locally. Upload it yourself as public/unlisted before final submit.</p>
+          <video controls preload="metadata">
+            <source src="./reliefgrid-demo-video.webm" type="video/webm" />
+          </video>
+        </article>
+
+        <article class="media-card">
+          <p class="eyebrow">Pitch deck</p>
+          <h2>Presentation file</h2>
+          <p><a href="./reliefgrid-pitch-deck.pptx">Open/download reliefgrid-pitch-deck.pptx</a></p>
+        </article>
+
+        <section>
+          <p class="eyebrow">Screenshot order</p>
+          <div class="media-grid">
+            <article class="media-card">
+              <h2>1. Dashboard</h2>
+              <img src="./reliefgrid-main.png" alt="ReliefGrid main dashboard" />
+            </article>
+            <article class="media-card">
+              <h2>2. Brief</h2>
+              <img src="./reliefgrid-brief.png" alt="ReliefGrid dispatch brief export" />
+            </article>
+            <article class="media-card">
+              <h2>3. Mobile</h2>
+              <img src="./reliefgrid-mobile.png" alt="ReliefGrid mobile screenshot" />
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const target = document.querySelector(`#${button.dataset.copy}`);
+          await navigator.clipboard.writeText(target.value);
+          button.textContent = "Copied";
+          setTimeout(() => {
+            button.textContent = "Copy";
+          }, 1200);
+        });
+      });
+    </script>
+  </body>
+</html>
+

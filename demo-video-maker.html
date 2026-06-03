@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ReliefGrid Demo Video Maker</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      .video-maker-shell {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(320px, 0.85fr) minmax(520px, 1.15fr);
+        gap: 18px;
+        min-height: 100vh;
+        padding: 24px;
+      }
+
+      .video-maker-shell video,
+      .video-maker-shell canvas {
+        width: 100%;
+      }
+
+      .progress-shell {
+        height: 12px;
+        overflow: hidden;
+        border: 1px solid var(--hard-line);
+        border-radius: 999px;
+        background: var(--surface-strong);
+      }
+
+      .progress {
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--green), var(--blue), var(--amber));
+      }
+
+      @media (max-width: 980px) {
+        .video-maker-shell {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="video-maker-shell">
+      <section class="panel">
+        <p class="eyebrow">Local video deliverable</p>
+        <h1>ReliefGrid Demo</h1>
+        <p class="lede">Generate a short WebM demo from the screenshots and script. Upload the finished file yourself.</p>
+        <div class="panel">
+          <strong id="statusText">Ready to render.</strong>
+          <p id="detailText">The export records the timed canvas demo.</p>
+          <div class="progress-shell"><div class="progress" id="progress"></div></div>
+        </div>
+        <div class="button-row">
+          <button class="tool-button ghost" type="button" id="previewFrame">Render preview</button>
+          <button class="tool-button" type="button" id="generateVideo">Generate WebM</button>
+        </div>
+        <a class="download-link" id="downloadLink" href="#" download="reliefgrid-demo-video.webm" aria-disabled="true">Download WebM</a>
+      </section>
+      <section class="panel">
+        <p class="eyebrow">Video canvas</p>
+        <canvas id="videoCanvas" width="1280" height="720"></canvas>
+        <video id="videoPreview" controls hidden></video>
+      </section>
+    </main>
+
+    <script>
+      const slides = [
+        {
+          seconds: 12,
+          kicker: "Problem",
+          title: "Several zones can be urgent at the same time.",
+          body: "ReliefGrid helps local teams decide where scarce emergency supplies should go first.",
+          image: "./reliefgrid-main.png",
+          callout: "Prioritize response before the crisis spreads.",
+        },
+        {
+          seconds: 14,
+          kicker: "Signals",
+          title: "The score is visible and editable.",
+          body: "Severity, vulnerable residents, population exposure, comms reliability, resource fit, and travel friction shape the queue.",
+          image: "./reliefgrid-main.png",
+          callout: "Not the loudest report. The highest-risk zone.",
+        },
+        {
+          seconds: 16,
+          kicker: "Output",
+          title: "The dispatch brief turns analysis into action.",
+          body: "The team gets a top mission, first-hour operating plan, and fallback if supplies or communications fail.",
+          image: "./reliefgrid-brief.png",
+          callout: "Top zone + reason + first-hour plan + fallback.",
+        },
+        {
+          seconds: 12,
+          kicker: "Use anywhere",
+          title: "Local-first keeps it usable under stress.",
+          body: "The prototype saves in the browser, copies a brief, exports PNG, and does not require an account.",
+          image: "./reliefgrid-mobile.png",
+          callout: "No account. Clear handoff. Faster first move.",
+        },
+      ];
+
+      const totalSeconds = slides.reduce((sum, slide) => sum + slide.seconds, 0);
+      const canvas = document.querySelector("#videoCanvas");
+      const ctx = canvas.getContext("2d");
+      const els = {
+        preview: document.querySelector("#previewFrame"),
+        generate: document.querySelector("#generateVideo"),
+        download: document.querySelector("#downloadLink"),
+        video: document.querySelector("#videoPreview"),
+        status: document.querySelector("#statusText"),
+        detail: document.querySelector("#detailText"),
+        progress: document.querySelector("#progress"),
+      };
+      const imageCache = new Map();
+
+      function loadImage(src) {
+        if (imageCache.has(src)) return imageCache.get(src);
+        const promise = new Promise((resolve, reject) => {
+          const image = new Image();
+          image.onload = () => resolve(image);
+          image.onerror = () => reject(new Error(`Could not load ${src}`));
+          image.src = src;
+        });
+        imageCache.set(src, promise);
+        return promise;
+      }
+
+      function wrapText(text, x, y, maxWidth, lineHeight, maxLines) {
+        const words = text.split(/\s+/);
+        const lines = [];
+        let line = "";
+        for (const word of words) {
+          const candidate = line ? `${line} ${word}` : word;
+          if (ctx.measureText(candidate).width > maxWidth && line) {
+            lines.push(line);
+            line = word;
+          } else {
+            line = candidate;
+          }
+        }
+        if (line) lines.push(line);
+        lines.slice(0, maxLines).forEach((lineText, index) => ctx.fillText(lineText, x, y + index * lineHeight));
+      }
+
+      function coverImage(image, x, y, width, height) {
+        const scale = Math.max(width / image.naturalWidth, height / image.naturalHeight);
+        const drawWidth = image.naturalWidth * scale;
+        const drawHeight = image.naturalHeight * scale;
+        ctx.drawImage(image, x, y, drawWidth, drawHeight);
+      }
+
+      async function drawSlide(index, progress = 0) {
+        const slide = slides[index];
+        const image = await loadImage(slide.image);
+        ctx.fillStyle = "#f4f1e8";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#15201d";
+        ctx.fillRect(28, 28, 500, 664);
+        ctx.fillStyle = "#bbf7d0";
+        ctx.font = "900 16px Avenir Next, sans-serif";
+        ctx.fillText(slide.kicker.toUpperCase(), 58, 84);
+        ctx.fillStyle = "#fffaf0";
+        ctx.font = "900 72px Iowan Old Style, Georgia, serif";
+        ctx.fillText("ReliefGrid", 58, 152);
+        ctx.fillStyle = "#f6c84f";
+        ctx.fillRect(58, 190, 430 * progress, 9);
+        ctx.fillStyle = "#fffaf0";
+        ctx.font = "900 48px Iowan Old Style, Georgia, serif";
+        wrapText(slide.title, 58, 310, 420, 48, 4);
+        ctx.fillStyle = "#bbf7d0";
+        ctx.font = "500 24px Avenir Next, sans-serif";
+        wrapText(slide.body, 58, 500, 410, 32, 4);
+        ctx.fillStyle = "#13201d";
+        ctx.fillRect(552, 28, 700, 664);
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(572, 78, 660, 530, 8);
+        ctx.clip();
+        coverImage(image, 572, 78, 660, 530);
+        ctx.restore();
+        ctx.fillStyle = "#f6c84f";
+        ctx.fillRect(740, 586, 440, 56);
+        ctx.fillStyle = "#15201d";
+        ctx.font = "900 25px Iowan Old Style, Georgia, serif";
+        wrapText(slide.callout, 758, 622, 400, 26, 2);
+      }
+
+      function setStatus(status, detail, percent) {
+        els.status.textContent = status;
+        els.detail.textContent = detail;
+        els.progress.style.width = `${Math.max(0, Math.min(100, percent))}%`;
+      }
+
+      function pickMimeType() {
+        return ["video/webm;codecs=vp9", "video/webm;codecs=vp8", "video/webm"].find((type) => MediaRecorder.isTypeSupported(type)) || "";
+      }
+
+      async function generateVideo(speed = 1) {
+        const stream = canvas.captureStream(15);
+        const recorder = new MediaRecorder(stream, { mimeType: pickMimeType(), videoBitsPerSecond: 3600000 });
+        const chunks = [];
+        recorder.ondataavailable = (event) => {
+          if (event.data.size) chunks.push(event.data);
+        };
+        const done = new Promise((resolve) => {
+          recorder.onstop = resolve;
+        });
+        recorder.start();
+        let elapsed = 0;
+        for (let index = 0; index < slides.length; index += 1) {
+          const slide = slides[index];
+          const frames = Math.max(1, Math.round((slide.seconds * 15) / speed));
+          for (let frame = 0; frame < frames; frame += 1) {
+            const slideProgress = frame / frames;
+            const globalProgress = (elapsed + slide.seconds * slideProgress) / totalSeconds;
+            await drawSlide(index, globalProgress);
+            setStatus("Generating WebM...", `${Math.round(globalProgress * 100)}% complete`, globalProgress * 100);
+            await new Promise((resolve) => setTimeout(resolve, 1000 / 15));
+          }
+          elapsed += slide.seconds;
+        }
+        await drawSlide(slides.length - 1, 1);
+        recorder.stop();
+        await done;
+        stream.getTracks().forEach((track) => track.stop());
+        const blob = new Blob(chunks, { type: "video/webm" });
+        const url = URL.createObjectURL(blob);
+        els.download.href = url;
+        els.download.setAttribute("aria-disabled", "false");
+        els.video.src = url;
+        els.video.hidden = false;
+        setStatus("WebM ready.", `Generated ${Math.round(blob.size / 1024)} KB.`, 100);
+        return blob;
+      }
+
+      els.preview.addEventListener("click", () => drawSlide(0, 0));
+      els.generate.addEventListener("click", () => generateVideo().catch((error) => setStatus("Could not generate.", error.message, 0)));
+      window.ReliefGridVideo = { drawSlide, generateVideo, slides };
+      drawSlide(0, 0);
+    </script>
+  </body>
+</html>
+

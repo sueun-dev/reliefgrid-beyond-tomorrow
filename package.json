@@ -1,0 +1,14 @@
+{
+  "name": "reliefgrid-beyond-tomorrow",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ReliefGrid prioritizes community response missions when resources are scarce.",
+  "scripts": {
+    "start": "python3 -m http.server 8031",
+    "check": "node --check app.js",
+    "qa": "npm run check && node qa-check.mjs",
+    "final:qa": "node final-qa.mjs",
+    "link:check": "node external-link-check.mjs"
+  }
+}
+
