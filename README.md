@@ -2,6 +2,11 @@
 
 **Prioritize community response before a local emergency becomes a wider failure.**
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sueun-dev/reliefgrid-beyond-tomorrow)
+
+> One-click live demo: the button above builds the included `Dockerfile` and gives
+> you a public `https://…onrender.com` URL. See [`DEPLOY.md`](./DEPLOY.md) for details.
+
 ReliefGrid is a Beyond Tomorrow Summit submission for local responders, student
 organizers, and community teams who must decide *where limited supplies should go
 first* during a fast-moving emergency.

@@ -12,6 +12,14 @@ allow). First boot takes ~5–10 s while it fetches live data.
 
 ## Option A — Render (recommended, has a free tier)
 
+**One-click button (fastest):**
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sueun-dev/reliefgrid-beyond-tomorrow)
+
+Click it, sign in to Render, and confirm — Render reads `render.yaml`, builds the
+`Dockerfile`, and hands you a public URL. Then paste that URL into Devpost's **Live
+demo** field.
+
 **Blueprint (one click, uses `render.yaml`):**
 1. Push this repo to GitHub (see `SUBMIT_RUNBOOK.md`).
 2. Go to <https://dashboard.render.com> → **New → Blueprint**.
