@@ -17,12 +17,13 @@ Use these exact targets once the repo is published:
 
 - GitHub repository: `https://github.com/sueun-dev/reliefgrid-beyond-tomorrow`
 - Live demo: `https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/`
+- Demo video page: `https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/demo-video.html`
 - Handoff page: `https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/devpost-handoff.html`
 
 For the demo video URL, safest options are:
 
-1. Upload `reliefgrid-demo-video.webm` as an unlisted video if the platform accepts WebM.
-2. Use a public file link that opens without login.
+1. Use the GitHub Pages video page if Devpost accepts a public page URL.
+2. Upload `reliefgrid-demo-video.webm` as an unlisted video if the platform accepts WebM.
 3. Use the GitHub raw file link only if Devpost accepts it as a video URL.
 
 ## Publish Commands If User Approves
@@ -40,6 +41,7 @@ Then verify:
 ```bash
 node external-link-check.mjs https://github.com/sueun-dev/reliefgrid-beyond-tomorrow
 node external-link-check.mjs https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/
+node external-link-check.mjs https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/demo-video.html
 node external-link-check.mjs https://sueun-dev.github.io/reliefgrid-beyond-tomorrow/devpost-handoff.html
 ```
 

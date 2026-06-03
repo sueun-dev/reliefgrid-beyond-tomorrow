@@ -70,6 +70,7 @@ node final-qa.mjs
 - Demo script: `demo-script.md`
 - Devpost handoff page: `devpost-handoff.html`
 - Demo video maker: `demo-video-maker.html`
+- Public demo video page: `demo-video.html`
 - Demo video artifact: `reliefgrid-demo-video.webm`
 - Pitch deck: `reliefgrid-pitch-deck.pptx`
 - Pitch deck builder: `build-pitch-deck.mjs`
@@ -86,6 +87,7 @@ node final-qa.mjs
 - `AWARD_READINESS_AUDIT.md` - judging-rubric readiness and remaining risk notes
 - `PUBLIC_LINKS_READINESS.md` - GitHub, live demo, and public video link readiness notes
 - `devpost-handoff.html` - local copy buttons and media checklist
+- `demo-video.html` - public demo video page for GitHub Pages
 - `demo-video-maker.html` - local WebM demo generator
 - `build-pitch-deck.mjs` - local PPTX deck generator
 - `reliefgrid-main.png` - main dashboard screenshot

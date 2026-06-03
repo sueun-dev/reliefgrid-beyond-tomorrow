@@ -5,6 +5,7 @@ import { execFileSync } from "node:child_process";
 const urls = [
   ["App", "/"],
   ["Devpost handoff", "/devpost-handoff.html"],
+  ["Demo video page", "/demo-video.html"],
   ["Video maker", "/demo-video-maker.html"],
   ["Generated WebM", "/reliefgrid-demo-video.webm"],
 ];
@@ -76,6 +77,7 @@ const requiredPackageEntries = [
   "PUBLIC_LINKS_READINESS.md",
   "SYSTEM_QA.md",
   "demo-script.md",
+  "demo-video.html",
   "build-pitch-deck.mjs",
   "devpost-handoff.html",
   "demo-video-maker.html",

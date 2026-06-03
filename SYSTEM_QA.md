@@ -12,8 +12,9 @@ Checked on June 3, 2026 with the Codex in-app browser against `http://127.0.0.1:
 - Save / reload: saved plan now reloads from `localStorage` and restores incident, resources, zones, and ranking.
 - Reset: clears saved local plan and returns to the default heatwave scenario.
 - Devpost handoff: 8 copy buttons, including Judge Summary, screenshot media, WebM video preload, pitch deck link, and category/fit copy all work.
+- Demo video page: `demo-video.html` loads the generated WebM, poster, rubric-friendly metadata, and transcript without console errors.
 - Demo video maker: preview render works, full WebM generation completed in browser, progress updates, blob preview, and download state all work.
-- Responsive QA: `/`, `/devpost-handoff.html`, and `/demo-video-maker.html` were checked at 390 x 844 mobile and 1280 x 900 desktop with no horizontal overflow.
+- Responsive QA: `/`, `/devpost-handoff.html`, `/demo-video.html`, and `/demo-video-maker.html` were checked at 390 x 844 mobile and desktop widths with no horizontal overflow.
 
 ## Issues Found And Fixed
 

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ReliefGrid Demo Video</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      .video-shell {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        gap: 18px;
+        max-width: 1180px;
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .video-hero,
+      .video-meta,
+      .transcript-panel {
+        border: 1px solid var(--hard-line);
+        border-radius: 8px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(22px) saturate(132%);
+      }
+
+      .video-hero {
+        display: grid;
+        gap: 18px;
+        padding: 24px;
+      }
+
+      .video-hero h1 {
+        max-width: 760px;
+      }
+
+      video {
+        width: 100%;
+        border: 1px solid var(--hard-line);
+        border-radius: 8px;
+        background: #13201d;
+      }
+
+      .video-meta {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0;
+        overflow: hidden;
+      }
+
+      .video-meta div {
+        min-width: 0;
+        border-right: 1px solid var(--line);
+        padding: 14px;
+      }
+
+      .video-meta div:last-child {
+        border-right: 0;
+      }
+
+      .video-meta span {
+        display: block;
+        color: var(--blue);
+        font-size: 0.72rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .video-meta strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 0.96rem;
+      }
+
+      .transcript-panel {
+        padding: 20px;
+      }
+
+      .transcript-panel ol {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding-left: 22px;
+      }
+
+      .transcript-panel li {
+        color: var(--ink);
+        font-weight: 800;
+        line-height: 1.42;
+      }
+
+      @media (max-width: 760px) {
+        .video-shell {
+          padding: 12px;
+        }
+
+        .video-hero,
+        .transcript-panel {
+          padding: 14px;
+        }
+
+        .video-meta {
+          grid-template-columns: 1fr;
+        }
+
+        .video-meta div {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .video-meta div:last-child {
+          border-bottom: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="video-shell">
+      <section class="video-hero">
+        <div>
+          <p class="eyebrow">ReliefGrid demo</p>
+          <h1>Prioritize response before the crisis spreads.</h1>
+          <p class="lede">ReliefGrid turns scattered emergency signals into a ranked dispatch brief for local teams working with scarce supplies.</p>
+        </div>
+        <video controls preload="metadata" poster="./reliefgrid-main.png">
+          <source src="./reliefgrid-demo-video.webm" type="video/webm" />
+        </video>
+      </section>
+
+      <section class="video-meta" aria-label="Demo details">
+        <div>
+          <span>Prototype</span>
+          <strong>Static web app</strong>
+        </div>
+        <div>
+          <span>Runs on</span>
+          <strong>HTML, CSS, JavaScript</strong>
+        </div>
+        <div>
+          <span>Output</span>
+          <strong>Dispatch brief and PNG handoff</strong>
+        </div>
+        <div>
+          <span>Use case</span>
+          <strong>Heatwave, flood, clinic outage</strong>
+        </div>
+      </section>
+
+      <section class="transcript-panel">
+        <p class="eyebrow">Walkthrough</p>
+        <h2>What the demo shows</h2>
+        <ol>
+          <li>Local teams start with an incident, time window, transport mode, available supplies, and zone signals.</li>
+          <li>ReliefGrid ranks zones using severity, vulnerable residents, population exposure, comms reliability, resource fit, and travel friction.</li>
+          <li>The canvas map shows the relief hub, priority route, and ranked response zones.</li>
+          <li>The dispatch brief explains the top mission, first-hour actions, and fallback plan in copy-ready language.</li>
+          <li>The prototype works locally with save, copy, and PNG export paths for fast handoff.</li>
+        </ol>
+      </section>
+    </main>
+  </body>
+</html>
