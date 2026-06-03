@@ -86,7 +86,7 @@ Secondary: Data & Analytics, Productivity.
 
 - **GitHub repository:** https://github.com/sueun-dev/reliefgrid-beyond-tomorrow
 - **Live demo:** _deploy in one click — README "Deploy to Render" button — then paste the `https://…onrender.com` URL here_
-- **Demo video:** _record a 60–75s walkthrough (see `demo-script.md`)_
+- **Demo video:** `reliefgrid-demo-video.mp4` (57s, new UI + real data, narrated with a local **Qwen3-TTS** model) — upload to YouTube/Vimeo and paste the link, or record your own screen walkthrough (`demo-script.md`)
 - **Thumbnail / screenshots:** `reliefgrid-brief.png` (committed); capture the dashboard from the running app
 
 > The official page asks for a GitHub repository, demo video, and screenshots.
