@@ -60,7 +60,7 @@ Use `DEVPOST_FIELDS.md` (Built With now lists the full stack).
 ## 7. Attach media + links
 
 - Pitch deck: `reliefgrid-pitch-deck.pptx`
-- Demo video: `reliefgrid-demo-video.mp4` (63s, new UI + real data, narrated in my own voice via Qwen3-TTS voice cloning)
+- Demo video: `reliefgrid-demo-video.mp4` (68s, new UI + real data, narrated in my own voice via Qwen3-TTS voice cloning)
 - GitHub repository URL
 - Fresh screenshots from step 3
 
