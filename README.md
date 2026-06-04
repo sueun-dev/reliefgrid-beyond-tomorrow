@@ -187,4 +187,4 @@ qa.py                in-process end-to-end QA gate
 - Judge-facing rubric brief: `JUDGE_BRIEF.md`
 - Final submit runbook: `SUBMIT_RUNBOOK.md`
 - 60–75s demo script: `demo-script.md`
-- Pitch deck: `reliefgrid-pitch-deck.pptx`
+- Pitch deck: `reliefgrid-pitch-deck.pdf`
