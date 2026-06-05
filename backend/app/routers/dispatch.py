@@ -1,7 +1,7 @@
-"""Dispatch scoring + saved-brief endpoints.
+"""Dispatch ranking and saved-brief endpoints.
 
-``/ranking`` is a live, side-effect-free computation. ``/dispatch`` commits the
-current computation as an immutable DispatchPlan so teams keep an audit trail.
+/ranking just computes and returns; /dispatch saves the current result as a
+DispatchPlan row so there's a history of committed decisions.
 """
 
 from __future__ import annotations

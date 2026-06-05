@@ -106,10 +106,10 @@ def add_zone_from_place(
         name=label[:120],
         need=payload.need,
         residents=signals["residents"],
-        vulnerable=0,   # operator-reported — not invented
+        vulnerable=0,   # operator-reported - not invented
         severity=signals["severity"],
         distance=signals["distance"],
-        comms=0,        # operator-reported — not invented
+        comms=0,        # operator-reported - not invented
         x=x,
         y=y,
         latitude=signals["latitude"],

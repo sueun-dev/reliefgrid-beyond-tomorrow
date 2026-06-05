@@ -2,9 +2,9 @@
 
 The schema captures the full domain:
 
-* ``Incident``      — a crisis event with its operating constraints and resource pool.
-* ``Zone``          — a response area within an incident, with live signal inputs.
-* ``DispatchPlan``  — an immutable snapshot of a computed dispatch brief, so teams
+* ``Incident``      - a crisis event with its operating constraints and resource pool.
+* ``Zone``          - a response area within an incident, with live signal inputs.
+* ``DispatchPlan``  - an immutable snapshot of a computed dispatch brief, so teams
                       keep an auditable history of every decision they committed to.
 """
 
@@ -48,7 +48,7 @@ class Incident(Base):
     cooling_units: Mapped[int] = mapped_column(Integer, default=0)
     field_teams: Mapped[int] = mapped_column(Integer, default=1)
 
-    # Relief hub — a real geocoded origin point for travel-distance math
+    # Relief hub - a real geocoded origin point for travel-distance math
     hub_place: Mapped[Optional[str]] = mapped_column(String(160), nullable=True)
     hub_lat: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     hub_lon: Mapped[Optional[float]] = mapped_column(Float, nullable=True)

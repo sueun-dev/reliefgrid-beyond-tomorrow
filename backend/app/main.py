@@ -47,7 +47,7 @@ app = FastAPI(
     version="2.0.0",
     description=(
         "Prioritize community emergency response when supplies, staffing, transport, "
-        "and communications are constrained. Transparent, inspectable scoring — not a black box."
+        "and communications are limited."
     ),
     lifespan=lifespan,
 )

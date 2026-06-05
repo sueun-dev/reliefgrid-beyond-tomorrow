@@ -1,15 +1,9 @@
-"""Real-world data sources (Open-Meteo).
+"""Open-Meteo data access.
 
-Every value this module returns comes from a live, public, key-free API:
-
-* Geocoding  — https://geocoding-api.open-meteo.com  (real coordinates + population)
-* Forecast   — https://api.open-meteo.com             (real apparent temperature + precipitation)
-
-There is no synthetic data here. Severity is *derived* from real measurements with
-a transparent, disclosed formula (documented inline), and distance is real great-circle
-km between real coordinates. Fields with no public real-time source (e.g. comms
-reliability, % vulnerable residents) are NOT invented here — they are left for the
-operator to report from the field.
+Geocoding (coordinates + population) and forecast (apparent temperature,
+precipitation) from the free, key-free Open-Meteo APIs. Severity is derived from
+the weather values with the formula below; distance is great-circle km. comms%
+and vulnerable% have no public source, so the operator enters those.
 """
 
 from __future__ import annotations
@@ -151,7 +145,7 @@ def build_zone_signals(kind: str, place: Dict[str, Any], hub_lat: float, hub_lon
 
     Returns the measured fields (severity, residents, distance, coords) plus a
     human-readable provenance string. Operator-only fields (vulnerable, comms)
-    are deliberately left out — the caller defaults them to 0 for the operator.
+    are deliberately left out - the caller defaults them to 0 for the operator.
     """
     lat, lon = place["latitude"], place["longitude"]
     weather = fetch_weather(lat, lon)

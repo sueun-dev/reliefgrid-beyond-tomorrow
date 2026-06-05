@@ -1,6 +1,4 @@
-/* ===========================================================================
-   ReliefGrid — mission-control design system
-   =========================================================================== */
+/* ReliefGrid styles */
 :root {
   --ink: #070b14;
   --ink-2: #0b1120;
@@ -57,7 +55,7 @@ body {
     linear-gradient(180deg, #070b14 0%, #080d18 100%);
 }
 
-/* ── Top bar ───────────────────────────────────────────────────────────── */
+/* Top bar */
 .topbar {
   display: flex;
   align-items: center;
@@ -102,7 +100,7 @@ body {
 .status-pill.err { color: var(--red); border-color: rgba(251, 113, 133, 0.34); }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(52,211,153,0.5);} 70%{ box-shadow: 0 0 0 7px rgba(52,211,153,0);} 100%{ box-shadow:0 0 0 0 rgba(52,211,153,0);} }
 
-/* ── Layout ────────────────────────────────────────────────────────────── */
+/* Layout */
 .layout {
   display: grid;
   grid-template-columns: minmax(330px, 400px) 1fr;
@@ -113,7 +111,7 @@ body {
 }
 .control-col, .results-col { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
 
-/* ── Panels ────────────────────────────────────────────────────────────── */
+/* Panels */
 .panel {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -129,7 +127,7 @@ body {
 .panel-head h2 { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .muted { color: var(--faint); font-size: 12px; }
 
-/* ── Fields ────────────────────────────────────────────────────────────── */
+/* Fields */
 .field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
 .field:last-child { margin-bottom: 0; }
 .field-label { font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); }
@@ -224,7 +222,7 @@ body {
 }
 .template-btns button:hover { border-color: rgba(106, 165, 255, 0.5); background: rgba(106, 165, 255, 0.08); transform: translateY(-1px); }
 
-/* ── Zone cards ────────────────────────────────────────────────────────── */
+/* Zone cards */
 .zone-list { display: flex; flex-direction: column; gap: 12px; }
 .zone-card {
   background: rgba(7, 11, 20, 0.42);
@@ -277,7 +275,7 @@ input[type="range"]::-moz-range-thumb {
   background: var(--amber); border: 2px solid #1a130a; cursor: pointer;
 }
 
-/* ── Mission card ──────────────────────────────────────────────────────── */
+/* Mission card */
 .mission-card {
   position: relative; overflow: hidden;
   border-radius: var(--radius);
@@ -311,7 +309,7 @@ input[type="range"]::-moz-range-thumb {
 .score-value { font-size: 64px; font-weight: 800; font-family: var(--mono); line-height: 1; color: var(--amber); text-shadow: 0 4px 30px rgba(245, 181, 63, 0.4); }
 .score-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.2; }
 
-/* ── Metrics ───────────────────────────────────────────────────────────── */
+/* Metrics */
 .metrics-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .metric {
   display: flex; flex-direction: column; align-items: center; gap: 6px;
@@ -330,7 +328,7 @@ input[type="range"]::-moz-range-thumb {
 .metric-label { font-size: 13px; font-weight: 700; }
 .metric-sub { font-size: 11px; color: var(--faint); }
 
-/* ── Map ───────────────────────────────────────────────────────────────── */
+/* Map */
 .map-panel canvas {
   width: 100%; height: auto; display: block;
   border-radius: var(--radius-sm);
@@ -343,7 +341,7 @@ input[type="range"]::-moz-range-thumb {
 .legend .blue { background: var(--blue); }
 .legend .hub { background: #fff; border-radius: 50%; }
 
-/* ── Priority queue ────────────────────────────────────────────────────── */
+/* Priority queue */
 .queue { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .queue li {
   display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 14px;
@@ -367,7 +365,7 @@ input[type="range"]::-moz-range-thumb {
 .q-meta { font-size: 11px; color: var(--faint); margin-top: 5px; }
 .q-score { font-family: var(--mono); font-weight: 800; font-size: 22px; text-align: right; }
 
-/* ── Action plan ───────────────────────────────────────────────────────── */
+/* Action plan */
 .action-plan { list-style: none; display: flex; flex-direction: column; gap: 10px; counter-reset: step; }
 .action-plan li {
   display: flex; align-items: flex-start; gap: 12px;
@@ -385,7 +383,7 @@ input[type="range"]::-moz-range-thumb {
 .receipt-preview { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
 .receipt-preview img { width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--border); }
 
-/* ── History ───────────────────────────────────────────────────────────── */
+/* History */
 .history { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .history li {
   display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 14px;
@@ -396,7 +394,7 @@ input[type="range"]::-moz-range-thumb {
 .history .h-time { font-size: 11.5px; color: var(--faint); font-family: var(--mono); }
 .history-empty { color: var(--faint); font-size: 13px; padding: 8px 2px; }
 
-/* ── Buttons ───────────────────────────────────────────────────────────── */
+/* Buttons */
 .primary-btn, .ghost-btn, .pill-btn {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--font); font-weight: 600; cursor: pointer;
@@ -428,7 +426,7 @@ input[type="range"]::-moz-range-thumb {
 .icon-btn:hover { color: var(--text); border-color: var(--border-strong); }
 .icon-btn.danger:hover { color: var(--red); border-color: rgba(251, 113, 133, 0.4); background: rgba(251, 113, 133, 0.08); }
 
-/* ── Footer ────────────────────────────────────────────────────────────── */
+/* Footer */
 .footer {
   display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
   max-width: 1480px; margin: 0 auto; padding: 22px 28px 40px;
@@ -436,7 +434,7 @@ input[type="range"]::-moz-range-thumb {
 }
 .footer .dim { color: var(--faint); }
 
-/* ── Toasts ────────────────────────────────────────────────────────────── */
+/* Toasts */
 .toast-wrap { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 60; display: flex; flex-direction: column; gap: 10px; align-items: center; }
 .toast {
   display: flex; align-items: center; gap: 10px;
@@ -454,7 +452,7 @@ input[type="range"]::-moz-range-thumb {
 .fade-in { animation: fade 0.4s var(--ease); }
 @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ── Guided step rail ──────────────────────────────────────────────────── */
+/* Guided step rail */
 .steprail {
   display: flex; align-items: stretch; gap: 8px;
   max-width: 1480px; margin: 0 auto; padding: 14px 28px;
@@ -499,7 +497,7 @@ input[type="range"]::-moz-range-thumb {
 /* Panel sub-descriptions (plain-language guidance) */
 .panel-sub { margin: -6px 0 16px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 
-/* ── Inline help tooltips ──────────────────────────────────────────────── */
+/* Inline help tooltips */
 .help {
   display: inline-grid; place-items: center;
   width: 15px; height: 15px; vertical-align: middle; margin-left: 2px;
@@ -529,7 +527,7 @@ input[type="range"]::-moz-range-thumb {
 .help:hover::after, .help:focus::after { opacity: 1; transform: translateX(-50%) translateY(0); }
 .help:hover::before, .help:focus::before { opacity: 1; }
 
-/* ── Live recalculation badge ──────────────────────────────────────────── */
+/* Live recalculation badge */
 .live-badge {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
@@ -546,7 +544,7 @@ input[type="range"]::-moz-range-thumb {
 .dispatch-caption { margin-top: 12px; font-size: 12px; color: var(--faint); line-height: 1.5; }
 .dispatch-caption strong { color: var(--muted); font-weight: 700; }
 
-/* ── Live location search ──────────────────────────────────────────────── */
+/* Live location search */
 .locsearch {
   margin-bottom: 14px; padding: 12px;
   border: 1px solid rgba(106, 165, 255, 0.3); border-radius: var(--radius-sm);
@@ -566,7 +564,7 @@ input[type="range"]::-moz-range-thumb {
 .loc-note { font-size: 12.5px; color: var(--muted); padding: 6px 2px; }
 .loc-note.err { color: var(--red); }
 
-/* ── Zone card: live data + measured chips ─────────────────────────────── */
+/* Zone card: live data + measured chips */
 .zone-id { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
 .zone-name { font-size: 14.5px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .live-tag {
@@ -601,7 +599,7 @@ input[type="range"]::-moz-range-thumb {
 }
 .field-note { margin-top: 8px; font-size: 11px; color: var(--faint); line-height: 1.45; }
 
-/* ── Onboarding modal ──────────────────────────────────────────────────── */
+/* Onboarding modal */
 .modal-backdrop {
   position: fixed; inset: 0; z-index: 80;
   display: grid; place-items: center; padding: 24px;
@@ -639,7 +637,7 @@ input[type="range"]::-moz-range-thumb {
 .ob-cta { width: 100%; justify-content: center; margin-top: 22px; padding: 13px; font-size: 14px; }
 .ob-foot { margin-top: 12px; text-align: center; font-size: 11.5px; color: var(--faint); }
 
-/* ── Responsive ────────────────────────────────────────────────────────── */
+/* Responsive */
 @media (max-width: 1040px) {
   .layout { grid-template-columns: 1fr; }
   .mission-title, .mission-detail { max-width: 100%; }

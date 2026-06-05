@@ -12,7 +12,7 @@ TimeWindow = Literal[6, 12, 24]
 TransportMode = Literal["bike", "van", "mixed"]
 
 
-# --- Zones -------------------------------------------------------------------
+# Zones
 class ZoneBase(BaseModel):
     name: str = Field(min_length=1, max_length=120)
     need: Need = "Water"
@@ -53,7 +53,7 @@ class ZoneOut(ZoneBase):
     data_source: Optional[str] = None
 
 
-# --- Incidents ---------------------------------------------------------------
+# Incidents
 class IncidentBase(BaseModel):
     name: str = Field(min_length=1, max_length=160)
     kind: str = Field("custom", max_length=32)
@@ -107,7 +107,7 @@ class IncidentOut(IncidentSummary):
     zones: List[ZoneOut] = Field(default_factory=list)
 
 
-# --- Ranking / dispatch ------------------------------------------------------
+# Ranking / dispatch
 class RankedZone(ZoneOut):
     score: int
     fit: int
@@ -147,14 +147,14 @@ class DispatchPlanOut(BaseModel):
     created_at: datetime
 
 
-# --- Templates ---------------------------------------------------------------
+# Templates
 class TemplateInfo(BaseModel):
     key: str
     label: str
     description: str
 
 
-# --- Live real-world data (Open-Meteo) ---------------------------------------
+# Live real-world data (Open-Meteo)
 class GeocodeCandidate(BaseModel):
     name: Optional[str] = None
     admin1: Optional[str] = None

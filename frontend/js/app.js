@@ -3,7 +3,7 @@ import { toast } from "./toast.js";
 import { drawMap } from "./map.js";
 import { buildReceiptDataUrl } from "./receipt.js";
 
-// ── State ──────────────────────────────────────────────────────────────────
+// State
 const state = {
   templates: [],
   incidents: [],
@@ -20,7 +20,7 @@ const RESOURCES = [
   { key: "field_teams", label: "Field teams", min: 1, max: 60, step: 1, color: "#f5b53f", icon: '<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M16 6a3 3 0 0 1 0 6"/>' },
 ];
 
-// Operator-reported signals (no public real-time source — the human fills these in).
+// Operator-reported signals (no public real-time source - the human fills these in).
 const OPERATOR_SLIDERS = [
   { key: "vulnerable", label: "Vulnerable residents", min: 0, max: 100, step: 1, suffix: "%" },
   { key: "comms", label: "Working comms", min: 0, max: 100, step: 1, suffix: "%" },
@@ -28,7 +28,7 @@ const OPERATOR_SLIDERS = [
 
 const NEEDS = ["Water", "Medical", "Cooling", "Power"];
 
-// ── Helpers ────────────────────────────────────────────────────────────────
+// Helpers
 const $ = (id) => document.getElementById(id);
 
 function debounce(fn, ms = 320) {
@@ -47,7 +47,7 @@ async function copyText(text) {
   ta.remove(); return ok;
 }
 
-// ── Status bar ─────────────────────────────────────────────────────────────
+// Status bar
 async function refreshStatus() {
   const pill = $("statusPill");
   try {
@@ -60,7 +60,7 @@ async function refreshStatus() {
   }
 }
 
-// ── Templates ──────────────────────────────────────────────────────────────
+// Templates
 function renderTemplates() {
   const box = $("templateBtns");
   box.innerHTML = "";
@@ -83,7 +83,7 @@ async function loadTemplate(key) {
   } catch (e) { toast(e.message, "err"); }
 }
 
-// ── Incident select ────────────────────────────────────────────────────────
+// Incident select
 async function refreshIncidents() {
   state.incidents = await api.listIncidents();
   const sel = $("incidentSelect");
@@ -97,7 +97,7 @@ async function refreshIncidents() {
   if (state.incident) sel.value = String(state.incident.id);
 }
 
-// ── Incident form ──────────────────────────────────────────────────────────
+// Incident form
 function renderIncidentForm(inc) {
   $("incidentName").value = inc.name;
   $("incidentSelect").value = String(inc.id);
@@ -142,7 +142,7 @@ function setSegmented(id, value) {
   [...$(id).children].forEach((b) => b.classList.toggle("active", b.dataset.value === value));
 }
 
-// ── Zones ──────────────────────────────────────────────────────────────────
+// Zones
 function renderZones(inc) {
   const list = $("zoneList");
   list.innerHTML = "";
@@ -170,7 +170,7 @@ function buildZoneCard(zone) {
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
       </button>
     </div>
-    <div class="zone-measured" title="From live data — not hand-edited">
+    <div class="zone-measured" title="From live data - not hand-edited">
       <div class="meas"><span class="meas-k">Severity</span><span class="meas-v">${zone.severity}</span><span class="meas-src derived">derived</span></div>
       <div class="meas"><span class="meas-k">Population</span><span class="meas-v">${fmtInt(pop)}</span><span class="meas-src live">live</span></div>
       <div class="meas"><span class="meas-k">Distance</span><span class="meas-v">${zone.distance} km</span><span class="meas-src live">computed</span></div>
@@ -206,7 +206,7 @@ function buildZoneCard(zone) {
   return card;
 }
 
-// ── Live location search (real places only — no fabricated zones) ────────────
+// Live location search
 function toggleLocSearch(force) {
   const box = $("locSearch");
   const show = typeof force === "boolean" ? force : box.hidden;
@@ -269,7 +269,7 @@ async function removeZone(zoneId) {
   } catch (e) { toast(e.message, "err"); }
 }
 
-// ── Patching (debounced server recompute) ──────────────────────────────────
+// Patching (debounced server recompute)
 const patchIncident = debounce(async (patch) => {
   try { await api.updateIncident(state.incident.id, patch); await refreshRanking(); }
   catch (e) { toast(e.message, "err"); }
@@ -280,7 +280,7 @@ const patchZone = debounce(async (zoneId, patch) => {
   catch (e) { toast(e.message, "err"); }
 }, 280);
 
-// ── Live recalculation badge ────────────────────────────────────────────────
+// Live recalculation badge
 function setLive(mode) {
   const badge = $("liveBadge");
   const text = $("liveText");
@@ -294,7 +294,7 @@ function setLive(mode) {
   }
 }
 
-// ── Ranking / results ──────────────────────────────────────────────────────
+// Ranking / results
 async function refreshRanking() {
   setLive("updating");
   try {
@@ -387,7 +387,7 @@ function animateNumber(el, target) {
   setTimeout(() => { if (!done) el.textContent = String(target); }, dur + 120);
 }
 
-// ── Dispatch history ───────────────────────────────────────────────────────
+// Dispatch history
 async function loadHistory() {
   const plans = await api.listDispatchPlans(state.incident.id);
   const ul = $("history");
@@ -416,7 +416,7 @@ async function commitDispatch() {
   } catch (e) { toast(e.message, "err"); }
 }
 
-// ── Incident lifecycle ─────────────────────────────────────────────────────
+// Incident lifecycle
 async function loadIncident(id) {
   state.incident = await api.getIncident(id);
   renderIncidentForm(state.incident);
@@ -445,7 +445,7 @@ async function deleteCurrentIncident() {
   } catch (e) { toast(e.message, "err"); }
 }
 
-// ── Misc utils ─────────────────────────────────────────────────────────────
+// Misc utils
 function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 function fmtInt(n) { return Number(n || 0).toLocaleString(); }
 function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
@@ -455,7 +455,7 @@ function formatTime(iso) {
   return d.toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
 }
 
-// ── Onboarding ───────────────────────────────────────────────────────────────
+// Onboarding
 const OB_KEY = "reliefgrid_onboarded_v1";
 function showOnboarding() { const m = $("onboarding"); if (m) m.hidden = false; }
 function dismissOnboarding() {
@@ -468,7 +468,7 @@ function maybeShowOnboarding() {
   if (!seen) showOnboarding();
 }
 
-// ── Guided step rail (active-section tracking) ───────────────────────────────
+// Guided step rail (active-section tracking)
 function initStepRail() {
   const steps = [...document.querySelectorAll(".steprail .step")];
   const setActive = (id) => steps.forEach((s) => s.classList.toggle("active", s.dataset.step === id));
@@ -486,7 +486,7 @@ function initStepRail() {
   targets.forEach((t) => io.observe(t));
 }
 
-// ── Wiring ─────────────────────────────────────────────────────────────────
+// Wiring
 function wireEvents() {
   $("incidentSelect").addEventListener("change", (e) => loadIncident(Number(e.target.value)));
   $("deleteIncident").addEventListener("click", deleteCurrentIncident);
@@ -528,7 +528,7 @@ function wireEvents() {
   $("copyBrief").addEventListener("click", async () => {
     if (!state.ranking) return;
     const ok = await copyText(state.ranking.brief_text);
-    toast(ok ? "Brief copied to clipboard" : "Copy blocked — use Export PNG", ok ? "ok" : "err");
+    toast(ok ? "Brief copied to clipboard" : "Copy blocked - use Export PNG", ok ? "ok" : "err");
   });
 
   $("exportReceipt").addEventListener("click", () => {
@@ -543,11 +543,11 @@ function wireEvents() {
     $("downloadReceipt").href = url;
     $("receiptPanel").hidden = false;
     $("receiptPanel").scrollIntoView({ behavior: "smooth", block: "nearest" });
-    toast("Receipt ready — download below");
+    toast("Receipt ready - download below");
   });
 }
 
-// ── Boot ───────────────────────────────────────────────────────────────────
+// Boot
 async function boot() {
   wireEvents();
   initStepRail();

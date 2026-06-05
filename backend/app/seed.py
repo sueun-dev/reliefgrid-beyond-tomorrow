@@ -1,12 +1,9 @@
-"""Scenario templates and first-run seeding — built from REAL data.
+"""Scenario templates and first-run seeding.
 
-Each template is a real relief hub plus a list of real nearby places. At build
-time we geocode every place (real coordinates + population) and pull live
-weather to derive severity. No zone signal is invented here. Operator-reported
-fields (vulnerable %, comms reliability) start at 0 for the operator to fill in.
-
-If the live data provider is unreachable, an incident is still created as an
-empty shell — the app never falls back to fabricated zones.
+Each template is a relief hub plus nearby places. On seed we geocode each place
+and pull live weather to set population, severity and distance; vulnerable% and
+comms% start at 0 for the operator. If the data provider is down, the incident
+is created without zones rather than with made-up values.
 """
 
 from __future__ import annotations

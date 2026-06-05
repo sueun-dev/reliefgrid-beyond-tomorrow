@@ -1,20 +1,15 @@
-"""ReliefGrid priority-scoring engine.
+"""Zone priority scoring.
 
-This is the analytical heart of the product. It is a faithful, server-side port
-of the original client prototype's transparent scoring rule, refactored into a
-pure, side-effect-free module so it can be unit-tested and reused by the API.
-
-The model compares response zones on five inputs — severity, vulnerable
-residents, population exposure, comms reliability, and resource fit — then
-penalizes travel friction and scales the whole thing by how tight the operating
-window is. Every term is explainable; nothing is a black box.
+Ranks response zones by severity, vulnerable population, exposure, comms
+reliability and resource fit, minus a travel penalty, scaled by the operating
+window. Kept as plain functions so it's easy to test.
 """
 
 from __future__ import annotations
 
 from typing import Any, Dict, List
 
-# --- Tunable weights (kept explicit so the score stays inspectable) -----------
+# scoring weights
 W_SEVERITY = 0.44
 W_VULNERABLE = 0.28
 W_EXPOSURE = 0.18
@@ -49,7 +44,7 @@ def resource_fit(need: str, residents: float, vulnerable: float, resources: Dict
 
 
 def transport_penalty(distance: float, transport_mode: str) -> float:
-    """Travel friction cost — slower modes and longer distances cost more."""
+    """Travel friction cost - slower modes and longer distances cost more."""
     factor = TRANSPORT_FACTOR.get(transport_mode, 0.85)
     return distance * factor
 
@@ -128,7 +123,7 @@ def compute(incident: Any) -> Dict[str, Any]:
     """Full dispatch computation for an incident.
 
     Returns the ranked zones, headline mission, metrics, action plan, and a
-    plain-text brief — everything the UI and a saved DispatchPlan need.
+    plain-text brief - everything the UI and a saved DispatchPlan need.
     """
     resources = _resources(incident)
     time_window = int(getattr(incident, "time_window", 12) or 12)
