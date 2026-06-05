@@ -5,7 +5,7 @@
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sueun-dev/reliefgrid-beyond-tomorrow)
 
 > One-click live demo: the button above builds the included `Dockerfile` and gives
-> you a public `https://…onrender.com` URL. See [`DEPLOY.md`](./DEPLOY.md) for details.
+> you a public `https://...onrender.com` URL. See [`DEPLOY.md`](./DEPLOY.md) for details.
 
 ReliefGrid is a Beyond Tomorrow Summit submission for local responders, student
 organizers, and community teams who must decide *where limited supplies should go
@@ -13,18 +13,18 @@ first* during a fast-moving emergency.
 
 It turns **real-world signals** into a **dispatch brief**: the top zone, why it is
 first, which supplies to send, what to do in the first operating hour, and the
-fallback to use if the plan slips — backed by a real REST API, a persistent
+fallback to use if the plan slips - backed by a real REST API, a persistent
 database, and live data from real places, not just a single-screen toy.
 
 Every response zone is a **real place**. Its population, heat/flood severity, and
 travel distance are pulled live from the public [Open-Meteo](https://open-meteo.com/)
-geocoding + weather APIs — no fabricated numbers. The only operator-entered signals
+geocoding + weather APIs - no fabricated numbers. The only operator-entered signals
 are the two with no public real-time feed: % vulnerable residents and % working comms.
 
 ```
 ┌──────────────┐  REST/JSON  ┌───────────────┐  SQLAlchemy  ┌────────────┐
 │  SPA frontend │ ──────────▶ │ FastAPI server │ ───────────▶ │  SQLite DB │
-│ (vanilla ESM) │ ◀────────── │  scoring core  │ ◀─────────── │ incidents… │
+│ (vanilla ESM) │ ◀────────── │  scoring core  │ ◀─────────── │ incidents  │
 └──────────────┘   ranking    └───────┬───────┘   ORM models  └────────────┘
                                        │ httpx
                                        ▼
@@ -38,21 +38,21 @@ are the two with no public real-time feed: % vulnerable residents and % working 
 
 ## What it does
 
-1. **Model the incident** — name, operating window (6/12/24h), transport mode, and a
+1. **Model the incident** - name, operating window (6/12/24h), transport mode, and a
    resource pool (water kits, medical kits, cooling units, field teams).
-2. **Add real locations** — search any place; ReliefGrid geocodes it (real
+2. **Add real locations** - search any place; ReliefGrid geocodes it (real
    coordinates + population) and pulls live weather to derive severity and a real
    great-circle distance from the relief hub. You add only the two field-reported
-   signals — % vulnerable residents and % working comms.
-3. **Score transparently** — the server ranks every zone on a *fully inspectable*
+   signals - % vulnerable residents and % working comms.
+3. **Score transparently** - the server ranks every zone on a *fully inspectable*
    rule (no black box) and recomputes on every edit.
-4. **Read the brief** — top mission, priority queue, response map, three headline
+4. **Read the brief** - top mission, priority queue, response map, three headline
    metrics (impact / coverage / residual risk), and a first-hour action plan.
-5. **Commit & keep an audit trail** — save a dispatch snapshot to the database,
+5. **Commit & keep an audit trail** - save a dispatch snapshot to the database,
    copy the brief, or export it as a shareable PNG.
 
-Two real scenarios — a **metro heatwave** (Phoenix-area cities) and a **Gulf-coast
-flood** (Houston-area cities) — are seeded from live data on first boot, so the app
+Two real scenarios - a **metro heatwave** (Phoenix-area cities) and a **Gulf-coast
+flood** (Houston-area cities) - are seeded from live data on first boot, so the app
 always opens on real places with real current conditions.
 
 ## Why it's different
@@ -60,15 +60,15 @@ always opens on real places with real current conditions.
 - **Real data, not dummy data.** Population, severity, and distance come from live
   Open-Meteo geocoding + weather for real places. Severity is *derived* from real
   measurements (apparent temperature for heat, precipitation for flood) with a
-  disclosed formula. Fields with no public feed aren't invented — the operator
+  disclosed formula. Fields with no public feed aren't invented - the operator
   reports them.
 - **Real full stack.** A FastAPI backend computes the scoring server-side and a
   SQLite database persists incidents, zones, and every committed dispatch. The UI
-  is a thin client over a documented API — open `/docs` to drive it directly.
+  is a thin client over a documented API - open `/docs` to drive it directly.
 - **Transparent, editable scoring.** Every term (severity, vulnerability, exposure,
   comms risk, resource fit, travel penalty, time pressure) is visible and tunable.
 - **Operational output.** The result is a dispatch brief with a first-hour plan and
-  a fallback — not generic analytics.
+  a fallback - not generic analytics.
 - **Accountless.** No signup and no tracking; your work persists in a local database.
 
 ## Data provenance
@@ -83,8 +83,8 @@ always opens on real places with real current conditions.
 
 Each live zone stores its exact provenance string (e.g. `Open-Meteo · Mesa, Arizona ·
 apparent temp 40.8 °C · observed 2026-06-03T09:45`) and the UI labels every field as
-**live**, **derived**, or **you report/set** — nothing measured is faked, and nothing
-operator-entered is dressed up as measured. The severity *inputs* are real; the 0–100
+**live**, **derived**, or **you report/set** - nothing measured is faked, and nothing
+operator-entered is dressed up as measured. The severity *inputs* are real; the 0-100
 mapping and the scoring weights are transparent modelling choices, visible in `scoring.py`
 and `datasources.py`.
 
@@ -132,7 +132,7 @@ boot; it is gitignored, so a fresh clone always starts clean.
 
 Runs 29 checks in-process: scoring-engine fixtures, full incident/zone CRUD, live
 ranking, dispatch persistence, validation/404 handling, that the frontend + OpenAPI
-docs are served, and — when online — a real geocode + weather-backed zone build. The
+docs are served, and - when online - a real geocode + weather-backed zone build. The
 core suite needs no network; live checks self-skip when offline. Expected: **29 passed**.
 
 ## API surface
@@ -186,5 +186,5 @@ qa.py                in-process end-to-end QA gate
 - Devpost submission draft: `submission.md`
 - Judge-facing rubric brief: `JUDGE_BRIEF.md`
 - Final submit runbook: `SUBMIT_RUNBOOK.md`
-- 60–75s demo script: `demo-script.md`
+- 60-75s demo script: `demo-script.md`
 - Pitch deck: `reliefgrid-pitch-deck.pdf`

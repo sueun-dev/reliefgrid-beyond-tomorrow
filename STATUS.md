@@ -1,4 +1,4 @@
-# STATUS — #008 Beyond Tomorrow Summit
+# STATUS - #008 Beyond Tomorrow Summit
 
 > 갱신일: 2026-06-03 · 풀스택 재구축 완료 스냅샷
 
@@ -24,14 +24,14 @@
 - **진행 단계:** 풀스택 구현 완료 → 브라우저 검증 완료 → QA 그린 → 제출 직전
 - **핵심 산출물:**
   - 백엔드: `backend/app/` (FastAPI, ORM 모델, 스코어링 엔진, 라우터, 시드)
-  - 프론트: `frontend/` (새 SPA — index.html, css/styles.css, js/*)
+  - 프론트: `frontend/` (새 SPA - index.html, css/styles.css, js/*)
   - 실행: `run.sh`, `serve.py` / 품질: `qa.py` (29/29 통과)
-  - 데모 영상: `reliefgrid-demo-video.mp4` (68초, 새 UI·실데이터, **내 목소리 클론 내레이션** — Qwen3-TTS voice cloning)
+  - 데모 영상: `reliefgrid-demo-video.mp4` (68초, 새 UI·실데이터, **내 목소리 클론 내레이션** - Qwen3-TTS voice cloning)
 - **제출 문서:** `README.md`, `submission.md`, `DEVPOST_FIELDS.md`, `SUBMIT_RUNBOOK.md`,
   `JUDGE_BRIEF.md`, `demo-script.md`
 - **검증:** 백엔드 e2e(curl) + 브라우저 렌더/인터랙션 + `qa.py` 29/29
 - **남은 일(사용자 측):**
-  1. (선택) 새 UI 기준으로 데모 영상/스크린샷 재촬영 — `demo-script.md` 참고
+  1. (선택) 새 UI 기준으로 데모 영상/스크린샷 재촬영 - `demo-script.md` 참고
   2. GitHub 푸시 (origin: `sueun-dev/reliefgrid-beyond-tomorrow`)
   3. Devpost 최종 제출 (마감 D-2)
 

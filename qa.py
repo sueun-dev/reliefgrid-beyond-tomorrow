@@ -89,7 +89,7 @@ def _flood_fixture():
 
 
 def main() -> int:
-    # ── 1. Pure scoring engine (deterministic, offline) ───────────────────
+    # 1. Pure scoring engine (deterministic, offline)
     section("Scoring engine (fixed fixtures)")
     heat = _heat_fixture()
     r = scoring.compute(heat)
@@ -110,12 +110,12 @@ def main() -> int:
 
 
 def _api_checks(client) -> int:
-    # ── 2. Health (no seed in test mode) ──────────────────────────────────
+    # 2. Health (no seed in test mode)
     section("API: health")
     h = client.get("/api/health").json()
     check("health ok + database connected", h["status"] == "ok" and h["database"] == "connected")
 
-    # ── 3. Incident + zone CRUD (manual, offline) ─────────────────────────
+    # 3. Incident + zone CRUD (manual, offline)
     section("API: incident & zone CRUD")
     created = client.post("/api/incidents", json={
         "name": "QA Flood", "kind": "flood", "time_window": 6, "transport_mode": "mixed",
@@ -142,7 +142,7 @@ def _api_checks(client) -> int:
     upd = client.patch(f"/api/zones/{zid}", json={"severity": 10}).json()
     check("patch zone", upd["severity"] == 10)
 
-    # ── 4. Ranking reacts to edits ────────────────────────────────────────
+    # 4. Ranking reacts to edits
     section("API: live ranking")
     rank = client.get(f"/api/incidents/{iid}/ranking").json()
     check("ranking returns all 5 zones", len(rank["ranked"]) == 5)
@@ -152,14 +152,14 @@ def _api_checks(client) -> int:
     rank2 = client.get(f"/api/incidents/{iid}/ranking").json()
     check("boosting a zone makes it the new #1", rank2["ranked"][0]["id"] == zid, str(rank2["ranked"][0]["name"]))
 
-    # ── 5. Dispatch commit + history ──────────────────────────────────────
+    # 5. Dispatch commit + history
     section("API: dispatch commit & history")
     plan = client.post(f"/api/incidents/{iid}/dispatch").json()
     check("commit dispatch persists a plan", "id" in plan and plan["impact_score"] >= 0)
     plans = client.get(f"/api/incidents/{iid}/dispatch-plans").json()
     check("dispatch history lists the committed plan", len(plans) == 1 and plans[0]["id"] == plan["id"])
 
-    # ── 6. Validation + error handling ────────────────────────────────────
+    # 6. Validation + error handling
     section("API: validation & errors")
     check("invalid need rejected (422)",
           client.post(f"/api/incidents/{iid}/zones", json={"name": "x", "need": "Pizza"}).status_code == 422)
@@ -170,7 +170,7 @@ def _api_checks(client) -> int:
     check("delete zone -> 204", client.delete(f"/api/zones/{zid}").status_code == 204)
     check("delete incident -> 204", client.delete(f"/api/incidents/{iid}").status_code == 204)
 
-    # ── 7. Frontend + docs served ─────────────────────────────────────────
+    # 7. Frontend + docs served
     section("Static frontend & docs")
     index = client.get("/")
     check("index.html served at /", index.status_code == 200 and "ReliefGrid" in index.text)
@@ -178,11 +178,11 @@ def _api_checks(client) -> int:
     check("stylesheet served", client.get("/css/styles.css").status_code == 200)
     check("OpenAPI schema served", client.get("/openapi.json").status_code == 200)
 
-    # ── 8. Live real-world data (best effort — skipped offline) ────────────
+    # 8. Live real-world data (best effort - skipped offline)
     section("Live data (Open-Meteo, online only)")
     status = client.get("/api/live/status").json()
     if not status.get("reachable"):
-        print("  \033[33m∼\033[0m live provider unreachable — skipping online checks")
+        print("  \033[33m∼\033[0m live provider unreachable - skipping online checks")
     else:
         check("live status reachable", status["reachable"] is True)
         cands = client.get("/api/live/geocode", params={"q": "Phoenix"}).json()

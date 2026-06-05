@@ -15,7 +15,7 @@ Checked against the official Beyond Tomorrow Summit 30094 page on June 3, 2026.
 Lead with this:
 
 > ReliefGrid turns scattered emergency signals into a ranked dispatch brief, so local
-> teams know which zone gets scarce supplies first and why — backed by a real API and
+> teams know which zone gets scarce supplies first and why - backed by a real API and
 > a database, not just a single screen.
 
 Do not frame it as a generic dashboard. The strongest angle is **transparent crisis
@@ -41,7 +41,7 @@ transparent automation.
 ### Innovation & Creativity (25%)
 
 An emergency-coordination tool focused on the decision gap between reports and action.
-The dispatch brief — top zone, why, first-hour plan, fallback — is the differentiator.
+The dispatch brief - top zone, why, first-hour plan, fallback - is the differentiator.
 
 ### Technical Implementation (25%)
 
@@ -60,15 +60,15 @@ extends cleanly to multiple incidents, teams, and a hosted deployment.
 
 ### Design, Presentation & UX (25%)
 
-A focused mission-control interface. The first screen is the operating surface — top
-mission, response map, priority queue, metrics, and first-hour plan — with immediate,
+A focused mission-control interface. The first screen is the operating surface - top
+mission, response map, priority queue, metrics, and first-hour plan - with immediate,
 server-backed feedback on every edit.
 
 ## Talking Points (technical execution)
 
 - Scoring is server-side and **fully inspectable**; show a slider edit changing the
   ranking, then the same call in `/docs`.
-- `Commit dispatch` writes an immutable snapshot — show the timestamped history (audit
+- `Commit dispatch` writes an immutable snapshot - show the timestamped history (audit
   trail) and explain it persists across reloads with no account.
 - `qa.py` proves correctness deterministically (27/27), including exact score fixtures.
 

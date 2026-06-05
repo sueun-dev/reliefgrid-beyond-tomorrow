@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ReliefGrid — Prioritize response before the crisis spreads</title>
+  <title>ReliefGrid - Prioritize response before the crisis spreads</title>
   <meta name="description" content="ReliefGrid turns scarce-resource emergencies into a clear dispatch brief: where to send help first, why, and what to do in the first hour. Full-stack, transparent priority scoring." />
   <meta name="theme-color" content="#0a0f1a" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0f1a'/%3E%3Cpath d='M16 5l9 5v8c0 5-4 8-9 9-5-1-9-4-9-9V10z' fill='none' stroke='%23f5b53f' stroke-width='2'/%3E%3Ccircle cx='16' cy='15' r='3' fill='%2334d399'/%3E%3C/svg%3E" />
@@ -12,7 +12,7 @@
 <body>
   <div class="aurora" aria-hidden="true"></div>
 
-  <!-- ── Top bar ───────────────────────────────────────────────── -->
+  <!-- Top bar -->
   <header class="topbar">
     <div class="brand">
       <span class="brand-mark" aria-hidden="true">
@@ -31,7 +31,7 @@
 
     <span class="status-pill" id="statusPill" title="Backend status">
       <span class="status-dot" id="statusDot"></span>
-      <span id="statusText">connecting…</span>
+      <span id="statusText">connecting...</span>
     </span>
 
     <div class="topbar-actions">
@@ -46,7 +46,7 @@
     </div>
   </header>
 
-  <!-- ── Guided steps ──────────────────────────────────────────── -->
+  <!-- Guided steps -->
   <nav class="steprail" id="steprail" aria-label="How to use ReliefGrid">
     <a class="step" href="#step-setup" data-step="step-setup">
       <span class="step-num">1</span>
@@ -65,7 +65,7 @@
   </nav>
 
   <main class="layout">
-    <!-- ── Control column · STEP 1 ─────────────────────────────── -->
+    <!-- Control column · STEP 1 -->
     <section class="control-col" id="step-setup">
       <div class="step-flag"><span>Step 1</span> Set up the situation</div>
       <div class="panel" id="incidentPanel">
@@ -104,9 +104,9 @@
         </div>
 
         <div class="field">
-          <span class="field-label">Resource pool <span class="op-chip">you set</span> <span class="help" tabindex="0" role="note" aria-label="Help: resource pool" data-tip="What your team has on hand. There is no public feed for on-hand supplies, so you enter these — they are not live data.">i</span></span>
+          <span class="field-label">Resource pool <span class="op-chip">you set</span> <span class="help" tabindex="0" role="note" aria-label="Help: resource pool" data-tip="What your team has on hand. There is no public feed for on-hand supplies, so you enter these - they are not live data.">i</span></span>
           <div class="resource-grid" id="resourceGrid"></div>
-          <p class="field-note">Operational capacity you enter — no public feed exists for on-hand supplies.</p>
+          <p class="field-note">Operational capacity you enter - no public feed exists for on-hand supplies.</p>
         </div>
 
         <div class="template-row">
@@ -117,7 +117,7 @@
 
       <div class="panel" id="zonePanel">
         <div class="panel-head">
-          <h2>Response zones <span class="help" tabindex="0" role="note" aria-label="Help: response zones" data-tip="Each area is a real place. Population, heat/flood severity, and distance are pulled live from Open-Meteo. You report the two field signals — % vulnerable residents and % working comms.">i</span></h2>
+          <h2>Response zones <span class="help" tabindex="0" role="note" aria-label="Help: response zones" data-tip="Each area is a real place. Population, heat/flood severity, and distance are pulled live from Open-Meteo. You report the two field signals - % vulnerable residents and % working comms.">i</span></h2>
           <button class="pill-btn" id="addZone">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
             Add location
@@ -126,14 +126,14 @@
         <p class="panel-sub">Real places only. Search a location → live population, weather-based severity, and distance are fetched automatically. You set the field-reported signals.</p>
 
         <div class="data-legend" aria-label="Data sources">
-          <span><i class="dot live"></i> Live — Open-Meteo</span>
+          <span><i class="dot live"></i> Live - Open-Meteo</span>
           <span><i class="dot derived"></i> Derived from weather</span>
           <span><i class="dot operator"></i> You report</span>
         </div>
 
         <div class="locsearch" id="locSearch" hidden>
           <div class="locsearch-row">
-            <input id="placeInput" class="input" placeholder="Search a real place — e.g. Mesa, Tokyo, Galveston" maxlength="120" autocomplete="off" />
+            <input id="placeInput" class="input" placeholder="Search a real place - e.g. Mesa, Tokyo, Galveston" maxlength="120" autocomplete="off" />
             <select id="placeNeed" class="select" aria-label="Need for this location">
               <option value="Water">Water</option>
               <option value="Medical">Medical</option>
@@ -149,7 +149,7 @@
       </div>
     </section>
 
-    <!-- ── Results column · STEP 2 ─────────────────────────────── -->
+    <!-- Results column · STEP 2 -->
     <section class="results-col" id="step-review">
       <div class="step-flag"><span>Step 2</span> Review the priority</div>
       <article class="mission-card" id="missionCard">
@@ -158,8 +158,8 @@
           <span class="rank-badge gold">#1</span>
           <span class="live-badge" id="liveBadge" title="Results recalculate automatically on the server"><i></i><em id="liveText">Live</em></span>
         </div>
-        <h1 class="mission-title" id="missionTitle">—</h1>
-        <p class="mission-detail" id="missionDetail">—</p>
+        <h1 class="mission-title" id="missionTitle">-</h1>
+        <p class="mission-detail" id="missionDetail">-</p>
         <div class="mission-score">
           <span class="score-value" id="missionScore">0</span>
           <span class="score-label">priority<br/>score</span>
@@ -169,12 +169,12 @@
       <div class="metrics-row">
         <div class="metric" data-tone="amber">
           <div class="gauge"><svg viewBox="0 0 80 80"><circle class="g-track" cx="40" cy="40" r="34"/><circle class="g-fill" id="gaugeImpact" cx="40" cy="40" r="34"/></svg><span class="gauge-num" id="impactScore">0</span></div>
-          <span class="metric-label">Impact <span class="help" tabindex="0" role="note" aria-label="Help: impact" data-tip="Priority score of the #1 zone — how urgent the top mission is. Higher means more urgent.">i</span></span>
+          <span class="metric-label">Impact <span class="help" tabindex="0" role="note" aria-label="Help: impact" data-tip="Priority score of the #1 zone - how urgent the top mission is. Higher means more urgent.">i</span></span>
           <span class="metric-sub">top-zone priority</span>
         </div>
         <div class="metric" data-tone="green">
           <div class="gauge"><svg viewBox="0 0 80 80"><circle class="g-track" cx="40" cy="40" r="34"/><circle class="g-fill" id="gaugeCoverage" cx="40" cy="40" r="34"/></svg><span class="gauge-num" id="coverageScore">0</span></div>
-          <span class="metric-label">Coverage <span class="help" tabindex="0" role="note" aria-label="Help: coverage" data-tip="Average resource fit across all zones — how well your supplies cover the needs. Higher is better.">i</span></span>
+          <span class="metric-label">Coverage <span class="help" tabindex="0" role="note" aria-label="Help: coverage" data-tip="Average resource fit across all zones - how well your supplies cover the needs. Higher is better.">i</span></span>
           <span class="metric-sub">avg resource fit</span>
         </div>
         <div class="metric" data-tone="red">
@@ -238,7 +238,7 @@
     <span class="dim">FastAPI · SQLite · live data from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> · transparent priority scoring</span>
   </footer>
 
-  <!-- ── Onboarding ────────────────────────────────────────────── -->
+  <!-- Onboarding -->
   <div class="modal-backdrop" id="onboarding" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="obTitle">
       <button class="modal-close" id="obClose" type="button" aria-label="Close">
@@ -248,11 +248,11 @@
       <h2 id="obTitle">Decide who to help first.</h2>
       <p class="ob-lede">When supplies, teams, and time are scarce, ReliefGrid turns real-world signals into one clear answer: which area to help first, why, and what to do in the first hour.</p>
       <ol class="ob-steps">
-        <li><span>1</span><div><strong>Add real locations</strong><em>Search any place — live population, weather-based severity &amp; distance load automatically.</em></div></li>
+        <li><span>1</span><div><strong>Add real locations</strong><em>Search any place - live population, weather-based severity &amp; distance load automatically.</em></div></li>
         <li><span>2</span><div><strong>Review the priority</strong><em>See the ranked zones, the response map, and the recommended first move.</em></div></li>
         <li><span>3</span><div><strong>Commit &amp; share</strong><em>Save the dispatch to the database, then copy or export the brief.</em></div></li>
       </ol>
-      <button class="primary-btn ob-cta" id="obStart" type="button">Got it — let's start</button>
+      <button class="primary-btn ob-cta" id="obStart" type="button">Got it - let's start</button>
       <p class="ob-foot">Live data from Open-Meteo · no account needed · your work stays in this app's local database.</p>
     </div>
   </div>

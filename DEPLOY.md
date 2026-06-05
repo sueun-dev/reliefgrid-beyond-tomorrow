@@ -1,22 +1,22 @@
 # Deploying ReliefGrid (public live-demo link)
 
 ReliefGrid is a real full-stack app (FastAPI + SQLite), so it needs a host that
-runs a container — not static hosting like GitHub Pages. The included `Dockerfile`
+runs a container - not static hosting like GitHub Pages. The included `Dockerfile`
 works on any container platform. Two free, fast options below.
 
 The app boots, creates its SQLite schema, and **seeds real scenarios from live
 Open-Meteo data** on first start (needs outbound internet, which all these hosts
-allow). First boot takes ~5–10 s while it fetches live data.
+allow). First boot takes ~5-10 s while it fetches live data.
 
 ---
 
-## Option A — Render (recommended, has a free tier)
+## Option A - Render (recommended, has a free tier)
 
 **One-click button (fastest):**
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sueun-dev/reliefgrid-beyond-tomorrow)
 
-Click it, sign in to Render, and confirm — Render reads `render.yaml`, builds the
+Click it, sign in to Render, and confirm - Render reads `render.yaml`, builds the
 `Dockerfile`, and hands you a public URL. Then paste that URL into Devpost's **Live
 demo** field.
 
@@ -32,11 +32,11 @@ demo** field.
 3. Create. Done.
 
 > Free instances sleep after inactivity and reset their disk on redeploy. That's
-> fine here — the database simply re-seeds real data on the next boot.
+> fine here - the database simply re-seeds real data on the next boot.
 
 ---
 
-## Option B — Railway
+## Option B - Railway
 
 1. <https://railway.app> → **New Project → Deploy from GitHub repo**.
 2. Railway detects the `Dockerfile` and builds it.
@@ -45,7 +45,7 @@ demo** field.
 
 ---
 
-## Option C — Fly.io
+## Option C - Fly.io
 
 ```bash
 fly launch --no-deploy        # detects the Dockerfile; accept defaults
@@ -70,7 +70,7 @@ docker run -p 8031:8031 reliefgrid
 - Put the public URL in Devpost's **Live demo** field.
 - Smoke-test it: `curl https://YOUR-URL/api/health` → `{"status":"ok",...}`.
 - Interactive API docs are live at `https://YOUR-URL/docs`.
-- Optional: run the public-link check — `./.venv/bin/python external-link-check.mjs` is
+- Optional: run the public-link check - `./.venv/bin/python external-link-check.mjs` is
   for the old static flow; for the live app just confirm `/api/health` returns ok.
 
 ### Note on persistence

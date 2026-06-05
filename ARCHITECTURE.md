@@ -1,4 +1,4 @@
-# ReliefGrid — Architecture
+# ReliefGrid - Architecture
 
 A single FastAPI process serves both the REST API (`/api/*`) and the single-page
 frontend (`/`). State lives in SQLite via SQLAlchemy. Scoring is a pure function.
@@ -35,7 +35,7 @@ seeded with the heatwave + flood scenarios on first boot.
 
 ## The scoring rule (`backend/app/scoring.py`)
 
-Every term is explicit and inspectable — this is the product's core claim.
+Every term is explicit and inspectable - this is the product's core claim.
 
 For each zone:
 

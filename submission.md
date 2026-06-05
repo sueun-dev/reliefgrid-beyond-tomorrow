@@ -24,7 +24,7 @@ first. It turns noisy crisis signals into a dispatch brief: the top response zon
 why it is first, which supplies to send, what to do in the first operating hour, and
 what fallback to use if the plan slips.
 
-It is built as a real full-stack application — a FastAPI backend computes the
+It is built as a real full-stack application - a FastAPI backend computes the
 priority scoring server-side, a SQLite database persists incidents, response zones,
 and every committed dispatch, and a single-page frontend drives it all through a
 documented REST API. The same API is browsable and runnable at `/docs`.
@@ -60,7 +60,7 @@ revisit prior incidents and audit every dispatch decision they committed to.
   population, weather-derived severity, and great-circle distance from Open-Meteo.
 - Real metro-heatwave and Gulf-coast-flood scenarios, seeded from live data on boot.
 - Editable incident setup and resource pool; per-zone operator signals (vulnerable %,
-  comms %) — measured fields stay read-only with visible provenance.
+  comms %) - measured fields stay read-only with visible provenance.
 - Transparent, server-side priority scoring that recomputes on every edit.
 - Response map with ranked routes from the relief hub.
 - Three headline metrics: impact, coverage, and residual risk.
@@ -83,7 +83,7 @@ SQLAlchemy, so work survives a page reload without any account.
 ## Why It Fits Beyond Tomorrow Summit
 
 - **Real-world applicability:** a concrete decision aid for community emergency teams.
-- **Technical execution:** a genuine full stack — REST API, ORM-backed database,
+- **Technical execution:** a genuine full stack - REST API, ORM-backed database,
   live third-party data integration (Open-Meteo), a unit-tested scoring engine, and
   an automated 29-check QA gate.
 - **Usability:** opens on a real scenario, edits are immediate, output is an
