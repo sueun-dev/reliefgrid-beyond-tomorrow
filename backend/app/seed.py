@@ -86,7 +86,6 @@ def build_incident_from_template(key: str) -> models.Incident:
         hub_lon=hub["longitude"],
     )
 
-    scale = 1.4
     for position, spec in enumerate(template["zones"]):
         try:
             place = ds.geocode_near(spec["place"], hub["latitude"], hub["longitude"])
@@ -94,9 +93,8 @@ def build_incident_from_template(key: str) -> models.Incident:
         except ds.LiveDataError as exc:
             logger.warning("Skipping zone %s: %s", spec["place"], exc)
             continue
-        x = max(0.06, min(0.94, 0.5 + (place["longitude"] - hub["longitude"]) * scale))
-        y = max(0.06, min(0.94, 0.5 - (place["latitude"] - hub["latitude"]) * scale))
-        label = ", ".join([p for p in [place.get("name"), place.get("admin1")] if p]) or spec["place"]
+        x, y = ds.project_to_canvas(place["latitude"], place["longitude"], hub["latitude"], hub["longitude"])
+        label = ds.place_label(place) or spec["place"]
         incident.zones.append(models.Zone(
             position=position,
             name=label[:120],
@@ -106,8 +104,8 @@ def build_incident_from_template(key: str) -> models.Incident:
             severity=signals["severity"],
             distance=signals["distance"],
             comms=0,
-            x=round(x, 4),
-            y=round(y, 4),
+            x=x,
+            y=y,
             latitude=signals["latitude"],
             longitude=signals["longitude"],
             population=signals["population"],

@@ -18,6 +18,12 @@ GEOCODE_URL = "https://geocoding-api.open-meteo.com/v1/search"
 FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
 TIMEOUT = 12.0
 
+# Map-canvas projection: places are positioned on a 0-1 canvas relative to the
+# relief hub, then clamped to a margin so markers never sit on the edge.
+CANVAS_SCALE = 1.4
+CANVAS_MIN = 0.06
+CANVAS_MAX = 0.94
+
 # Heat severity is mapped from apparent ("feels-like") temperature in °C.
 # 22 °C and below → 0 (no heat stress); 47 °C → 100 (extreme danger).
 HEAT_BASE_C = 22.0
@@ -33,6 +39,23 @@ class LiveDataError(RuntimeError):
 
 def _clamp_int(value: float, low: int = 0, high: int = 100) -> int:
     return int(max(low, min(high, round(value))))
+
+
+def place_label(place: Dict[str, Any], *, include_country: bool = False) -> str:
+    """Human-readable 'name, admin1[, country]' label, skipping missing parts."""
+    parts = [place.get("name"), place.get("admin1")]
+    if include_country:
+        parts.append(place.get("country"))
+    return ", ".join(p for p in parts if p)
+
+
+def project_to_canvas(lat: float, lon: float, hub_lat: float, hub_lon: float) -> tuple[float, float]:
+    """Place a real coordinate on the 0-1 map canvas, relative to the hub."""
+    x = 0.5 + (lon - hub_lon) * CANVAS_SCALE
+    y = 0.5 - (lat - hub_lat) * CANVAS_SCALE
+    x = max(CANVAS_MIN, min(CANVAS_MAX, x))
+    y = max(CANVAS_MIN, min(CANVAS_MAX, y))
+    return round(x, 4), round(y, 4)
 
 
 def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -163,7 +186,7 @@ def build_zone_signals(kind: str, place: Dict[str, Any], hub_lat: float, hub_lon
     distance = haversine_km(hub_lat, hub_lon, lat, lon)
     population = place.get("population")
     stamp = weather.get("observed_at") or datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M")
-    label = ", ".join([p for p in [place.get("name"), place.get("admin1"), place.get("country")] if p])
+    label = place_label(place, include_country=True)
 
     return {
         "latitude": lat,
