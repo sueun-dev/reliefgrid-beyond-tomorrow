@@ -12,3 +12,5 @@ services:
     envVars:
       - key: PORT
         value: 8031
+      - key: RELIEFGRID_RELEASE
+        value: "2"
