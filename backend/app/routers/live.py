@@ -91,8 +91,21 @@ def add_zone_from_place(
 
     try:
         signals = ds.build_zone_signals(incident.kind, place, incident.hub_lat, incident.hub_lon)
-    except ds.LiveDataError as exc:
-        raise HTTPException(status_code=502, detail=str(exc)) from exc
+    except ds.LiveDataError:
+        # Geocoding worked but live weather is momentarily unavailable (e.g. the
+        # provider rate-limits this host). Add the zone anyway with its real
+        # coordinates, population and distance; the operator fills in severity.
+        label0 = ", ".join([p for p in [place.get("name"), place.get("admin1")] if p]) or payload.place
+        pop = place.get("population")
+        signals = {
+            "latitude": place["latitude"],
+            "longitude": place["longitude"],
+            "population": int(pop) if pop else None,
+            "residents": int(pop) if pop else 0,
+            "severity": 0,
+            "severity_basis": "live weather unavailable",
+            "data_source": f"Open-Meteo geocoding · {label0} · live weather unavailable",
+        }
 
     x, y = _project_xy(place["latitude"], place["longitude"], incident.hub_lat, incident.hub_lon)
     label = ", ".join([p for p in [place.get("name"), place.get("admin1")] if p]) or payload.place
