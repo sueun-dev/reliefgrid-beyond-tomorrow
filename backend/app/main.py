@@ -21,7 +21,7 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from sqlalchemy import select
+from sqlalchemy import func, select
 
 from . import models  # noqa: F401  (ensure models are imported before create_all)
 from .database import Base, SessionLocal, engine
@@ -70,14 +70,13 @@ app.include_router(live.incident_router)
 def health() -> dict:
     """Liveness probe plus a quick database census for the UI status bar."""
     with SessionLocal() as db:
-        incident_count = db.scalar(select(models.Incident.id).limit(1)) is not None
-        incidents_total = len(list(db.scalars(select(models.Incident.id))))
-        zones_total = len(list(db.scalars(select(models.Zone.id))))
-        plans_total = len(list(db.scalars(select(models.DispatchPlan.id))))
+        incidents_total = db.scalar(select(func.count()).select_from(models.Incident)) or 0
+        zones_total = db.scalar(select(func.count()).select_from(models.Zone)) or 0
+        plans_total = db.scalar(select(func.count()).select_from(models.DispatchPlan)) or 0
     return {
         "status": "ok",
         "database": "connected",
-        "seeded": incident_count,
+        "seeded": incidents_total > 0,
         "incidents": incidents_total,
         "zones": zones_total,
         "dispatch_plans": plans_total,

@@ -25,15 +25,6 @@ router = APIRouter(prefix="/api/live", tags=["live data"])
 incident_router = APIRouter(prefix="/api", tags=["live data"])
 
 
-def _project_xy(lat: float, lon: float, hub_lat: float, hub_lon: float) -> tuple[float, float]:
-    """Place a real coordinate on the 0-1 map canvas, relative to the hub."""
-    scale = 1.4
-    x = 0.5 + (lon - hub_lon) * scale
-    y = 0.5 - (lat - hub_lat) * scale
-    clamp = lambda v: max(0.06, min(0.94, v))  # noqa: E731
-    return round(clamp(x), 4), round(clamp(y), 4)
-
-
 @router.get("/status", response_model=schemas.LiveStatus)
 def live_status() -> schemas.LiveStatus:
     """Quick reachability check for the live data provider."""
@@ -89,13 +80,14 @@ def add_zone_from_place(
         incident.hub_lon = place["longitude"]
         incident.hub_place = place.get("name")
 
+    label = ds.place_label(place) or payload.place
+
     try:
         signals = ds.build_zone_signals(incident.kind, place, incident.hub_lat, incident.hub_lon)
     except ds.LiveDataError:
         # Geocoding worked but live weather is momentarily unavailable (e.g. the
         # provider rate-limits this host). Add the zone anyway with its real
         # coordinates, population and distance; the operator fills in severity.
-        label0 = ", ".join([p for p in [place.get("name"), place.get("admin1")] if p]) or payload.place
         pop = place.get("population")
         signals = {
             "latitude": place["latitude"],
@@ -105,11 +97,10 @@ def add_zone_from_place(
             "distance": ds.haversine_km(incident.hub_lat, incident.hub_lon, place["latitude"], place["longitude"]),
             "severity": 0,
             "severity_basis": "live weather unavailable",
-            "data_source": f"Open-Meteo geocoding · {label0} · live weather unavailable",
+            "data_source": f"Open-Meteo geocoding · {label} · live weather unavailable",
         }
 
-    x, y = _project_xy(place["latitude"], place["longitude"], incident.hub_lat, incident.hub_lon)
-    label = ", ".join([p for p in [place.get("name"), place.get("admin1")] if p]) or payload.place
+    x, y = ds.project_to_canvas(place["latitude"], place["longitude"], incident.hub_lat, incident.hub_lon)
     next_position = db.scalar(
         select(func.coalesce(func.max(models.Zone.position), -1) + 1).where(models.Zone.incident_id == incident.id)
     )
