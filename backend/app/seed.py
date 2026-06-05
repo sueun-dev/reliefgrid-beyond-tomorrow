@@ -1,14 +1,18 @@
 """Scenario templates and first-run seeding.
 
-Each template is a relief hub plus nearby places. On seed we geocode each place
-and pull live weather to set population, severity and distance; vulnerable% and
-comms% start at 0 for the operator. If the data provider is down, the incident
-is created without zones rather than with made-up values.
+Each template is a relief hub plus nearby places. The seed data (real
+coordinates, population, weather-derived severity and distance) was fetched from
+Open-Meteo and is cached in seed_data.json, so the demo populates instantly and
+doesn't depend on the geocoding API being reachable at boot. Live geocoding is
+still used for the "Add location" feature. vulnerable% and comms% start at 0 for
+the operator to fill in.
 """
 
 from __future__ import annotations
 
+import json
 import logging
+from pathlib import Path
 from typing import Any, Dict
 
 from sqlalchemy.orm import Session
@@ -17,6 +21,8 @@ from . import datasources as ds
 from . import models
 
 logger = logging.getLogger("reliefgrid.seed")
+
+SNAPSHOT_PATH = Path(__file__).resolve().parent / "seed_data.json"
 
 TEMPLATES: Dict[str, Dict[str, Any]] = {
     "heatwave": {
@@ -111,17 +117,27 @@ def build_incident_from_template(key: str) -> models.Incident:
     return incident
 
 
+def build_incident_from_snapshot(key: str) -> models.Incident:
+    """Build an incident from the cached real-data snapshot (no network)."""
+    data = json.loads(SNAPSHOT_PATH.read_text())[key]
+    incident = models.Incident(**data["incident"])
+    for zone in data["zones"]:
+        incident.zones.append(models.Zone(**zone))
+    return incident
+
+
 def seed_if_empty(db: Session) -> None:
-    """Populate a fresh database with real-data demo incidents."""
-    if db.query(models.Incident).count() > 0:
+    """Ensure the demo incidents (with zones) exist.
+
+    Seeds from the cached real-data snapshot so a fresh or wiped database always
+    comes up populated. Re-seeds when zones are missing, which also repairs an
+    instance whose ephemeral disk was reset.
+    """
+    if db.query(models.Zone).count() > 0:
         return
+    # Clear any zone-less incidents left by an earlier failed boot, then reseed.
+    db.query(models.Incident).delete()
+    db.commit()
     for key in ("heatwave", "flood"):
-        try:
-            db.add(build_incident_from_template(key))
-            db.commit()
-        except ds.LiveDataError as exc:
-            db.rollback()
-            logger.warning("Live seed for '%s' unavailable (%s); creating empty incident.", key, exc)
-            tpl = TEMPLATES[key]
-            db.add(models.Incident(**tpl["incident"]))
-            db.commit()
+        db.add(build_incident_from_snapshot(key))
+        db.commit()
