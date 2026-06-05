@@ -102,6 +102,7 @@ def add_zone_from_place(
             "longitude": place["longitude"],
             "population": int(pop) if pop else None,
             "residents": int(pop) if pop else 0,
+            "distance": ds.haversine_km(incident.hub_lat, incident.hub_lon, place["latitude"], place["longitude"]),
             "severity": 0,
             "severity_basis": "live weather unavailable",
             "data_source": f"Open-Meteo geocoding · {label0} · live weather unavailable",
